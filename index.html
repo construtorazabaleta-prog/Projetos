@@ -896,7 +896,7 @@ window.submitRequest = async () => {
     await addDoc(collection(db,'tasks'),{
       prancha:curPrancha, nome:curNome, pdfUrl:curPDF,
       autorNome:currentUser.displayName||'Anônimo', autorEmail:currentUser.email, autorFoto:currentUser.photoURL||'',
-      prio:$('rp-prio').value, desc, snap:hasDrawing()?getSnapshot():null,
+      prio:$('rp-prio').value, desc, snap: ($('rp-canvas-wrap').style.display!=='none')?getRpSnapshot():(hasDrawing()?getSnapshot():null),
       status:'aberto', notified:false, resolveDesc:'', resolveRev:'', created:serverTimestamp()
     });
     $('rp-desc').value=''; $('rp-prio').value='normal';
