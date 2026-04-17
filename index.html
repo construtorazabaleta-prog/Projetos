@@ -566,7 +566,7 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--t3)}
     <div class="mbody">
       <div class="pdf-side">
         <div class="pdf-scroll"><div class="pdf-wrap" id="pdf-wrap">
-          <iframe class="pdf-frame" id="pdf-frame" src="" width="960" height="680" allowfullscreen></iframe>
+          <iframe class="pdf-frame" id="pdf-frame" src="" width="960" height="680" allowfullscreen allow="fullscreen"></iframe>
           <canvas class="draw-canvas" id="draw-canvas" width="960" height="680"></canvas>
         </div></div>
         <div class="zbar">
@@ -890,7 +890,12 @@ window.trackDownload = (url, nome) => {
 // ── PDF MODAL ──
 let zScale=1, drawMode=false, penColor='#EF4444', penSize=3, drawing=false, lastX=0, lastY=0;
 
-function drivePreview(url){ const m1=url.match(/[?&]id=([a-zA-Z0-9_-]+)/); const m2=url.match(/\/d\/([a-zA-Z0-9_-]+)/); const id=m1?m1[1]:m2?m2[1]:''; return id?`https://drive.google.com/file/d/${id}/preview`:''; }
+function drivePreview(url){
+  const m1=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  const m2=url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  const id=m1?m1[1]:m2?m2[1]:'';
+  return id?`https://drive.google.com/file/d/${id}/preview?usp=sharing`:'';
+}
 
 window.openPDF = (url,nome,prancha,disc) => {
   curPDF=url; curNome=decodeURIComponent(nome||''); curPrancha=prancha||''; curDisc=disc||'';
@@ -1015,8 +1020,9 @@ function setReqPanel(on){
   if(on){
     if($('rp-canvas-wrap')){ $('rp-canvas-wrap').style.display='none'; }
     if($('rp-annotate-wrap')){ $('rp-annotate-wrap').style.display='block'; }
-    $('rp-snap').style.display='none';
+    if($('rp-snap')){ $('rp-snap').style.display='none'; }
     rpHasAnnotation=false;
+    initRpCanvas();
   }
 }
 window.toggleRequest = () => setReqPanel(!$('req-panel').classList.contains('on'));
@@ -1072,13 +1078,17 @@ window.setRpSize=el=>{rpPenSize=parseInt(el.dataset.size);document.querySelector
 window.clearRpCanvas=()=>{const c=$('rp-canvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(rpBaseImage)ctx.drawImage(rpBaseImage,0,0,c.width,c.height);rpHasAnnotation=false;};
 
 function getRpPos(e){const c=$('rp-canvas'),r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*c.width/r.width,(s.clientY-r.top)*c.height/r.height];}
-const rpCanvas=$('rp-canvas');
-rpCanvas.addEventListener('mousedown',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)});
-rpCanvas.addEventListener('mousemove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;});
-rpCanvas.addEventListener('mouseup',()=>rpDrawing=false);rpCanvas.addEventListener('mouseleave',()=>rpDrawing=false);
-rpCanvas.addEventListener('touchstart',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)},{passive:false});
-rpCanvas.addEventListener('touchmove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;},{passive:false});
-rpCanvas.addEventListener('touchend',()=>rpDrawing=false);
+function initRpCanvas(){
+  const rpCanvas=$('rp-canvas');
+  if(!rpCanvas) return;
+  rpCanvas.addEventListener('mousedown',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)});
+  rpCanvas.addEventListener('mousemove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;});
+  rpCanvas.addEventListener('mouseup',()=>rpDrawing=false);
+  rpCanvas.addEventListener('mouseleave',()=>rpDrawing=false);
+  rpCanvas.addEventListener('touchstart',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)},{passive:false});
+  rpCanvas.addEventListener('touchmove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;},{passive:false});
+  rpCanvas.addEventListener('touchend',()=>rpDrawing=false);
+}
 function getRpSnapshot(){const c=$('rp-canvas');return c?c.toDataURL('image/png'):null;}
 
 window.submitRequest = async () => {
@@ -1420,6 +1430,9 @@ window.loadAnalytics = async () => {
     : '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:1rem">Nenhum acesso registrado.</td></tr>';
 };
 
+// stubs for backwards compat
+window.openResolveForm = window.openResolveForm || function(id){ window.openDrawer(id); };
+window.confirmResolve  = window.confirmResolve  || function(id){ window.saveDrawer(); };
 </script>
 </body>
 </html>
