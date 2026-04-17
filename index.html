@@ -590,6 +590,13 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--t3)}
           <button class="sz-btn" data-size="12" onclick="setPenSize(this)">G</button>
           <div class="dt-sep"></div>
           <button class="clr-btn" onclick="clearCanvas()">Limpar</button>
+          <div class="dt-sep"></div>
+          <button onclick="saveDraftImage()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:12px;font-family:var(--font);border:1px solid var(--blue);border-radius:var(--rs);background:var(--bluel);color:var(--blue);cursor:pointer">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Salvar
+          </button>
+          <button onclick="shareDraftWhatsapp()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:12px;font-family:var(--font);border:1px solid #25D366;border-radius:var(--rs);background:rgba(37,211,102,.12);color:#25D366;cursor:pointer">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>WhatsApp
+          </button>
         </div>
       </div>
       <div class="req-panel" id="req-panel">
@@ -908,6 +915,78 @@ dc.addEventListener('touchstart',e=>{if(!drawMode)return;e.preventDefault();draw
 dc.addEventListener('touchmove',e=>{if(!drawing||!drawMode)return;e.preventDefault();const[x,y]=getPos(e);ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(x,y);ctx.strokeStyle=penColor;ctx.lineWidth=penSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[lastX,lastY]=[x,y]},{passive:false});
 dc.addEventListener('touchend',()=>drawing=false);
 window.clearCanvas = () => ctx.clearRect(0,0,dc.width,dc.height);
+
+window.saveDraftImage = () => {
+  // Compose: draw pdf frame area as background + annotations
+  const tmp = document.createElement('canvas');
+  tmp.width  = dc.width;
+  tmp.height = dc.height;
+  const tctx = tmp.getContext('2d');
+  // Dark background with project name
+  tctx.fillStyle = '#1E2130';
+  tctx.fillRect(0, 0, tmp.width, tmp.height);
+  // Header bar
+  tctx.fillStyle = '#1D9E75';
+  tctx.fillRect(0, 0, tmp.width, 36);
+  tctx.fillStyle = 'white';
+  tctx.font = 'bold 14px DM Sans, sans-serif';
+  tctx.textAlign = 'left';
+  tctx.fillText((curNome || curPrancha || 'Projeto').slice(0, 60), 12, 23);
+  tctx.font = '11px DM Sans, sans-serif';
+  tctx.fillStyle = 'rgba(255,255,255,0.7)';
+  tctx.textAlign = 'right';
+  tctx.fillText(new Date().toLocaleString('pt-BR'), tmp.width - 12, 23);
+  // Draw annotations on top
+  tctx.drawImage(dc, 0, 36);
+  const a = document.createElement('a');
+  a.download = 'rascunho_' + (curPrancha || 'projeto').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,30) + '.png';
+  a.href = tmp.toDataURL('image/png');
+  a.click();
+};
+
+window.shareDraftWhatsapp = async () => {
+  const tmp = document.createElement('canvas');
+  tmp.width  = dc.width;
+  tmp.height = dc.height + 36;
+  const tctx = tmp.getContext('2d');
+  tctx.fillStyle = '#1E2130';
+  tctx.fillRect(0, 0, tmp.width, tmp.height);
+  tctx.fillStyle = '#1D9E75';
+  tctx.fillRect(0, 0, tmp.width, 36);
+  tctx.fillStyle = 'white';
+  tctx.font = 'bold 14px DM Sans, sans-serif';
+  tctx.textAlign = 'left';
+  tctx.fillText((curNome || curPrancha || 'Projeto').slice(0, 60), 12, 23);
+  tctx.font = '11px DM Sans, sans-serif';
+  tctx.fillStyle = 'rgba(255,255,255,0.7)';
+  tctx.textAlign = 'right';
+  tctx.fillText(new Date().toLocaleString('pt-BR'), tmp.width - 12, 23);
+  tctx.drawImage(dc, 0, 36);
+
+  if(navigator.share){
+    tmp.toBlob(async blob => {
+      const file = new File([blob], 'rascunho.png', {type:'image/png'});
+      try{
+        if(navigator.canShare && navigator.canShare({files:[file]})){
+          await navigator.share({
+            files: [file],
+            title: 'Rascunho - ' + (curNome || curPrancha || 'Projeto'),
+            text:  curNome || curPrancha || ''
+          });
+          return;
+        }
+      }catch(e){}
+      window.saveDraftImage();
+      alert('Imagem salva! Envie pelo WhatsApp.');
+    }, 'image/png');
+  } else {
+    window.saveDraftImage();
+    setTimeout(() => {
+      alert('Imagem salva! Abra o WhatsApp e envie o arquivo baixado.');
+      window.open('https://web.whatsapp.com', '_blank');
+    }, 600);
+  }
+};
 window.setPenColor = el=>{ penColor=el.dataset.color; document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('sel')); el.classList.add('sel'); };
 window.setPenSize  = el=>{ penSize=parseInt(el.dataset.size); document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); };
 function hasDrawing(){ const d=ctx.getImageData(0,0,dc.width,dc.height).data; for(let i=3;i<d.length;i+=4){if(d[i]>0)return true;} return false; }
