@@ -892,8 +892,14 @@ let zScale=1, drawMode=false, penColor='#EF4444', penSize=3, drawing=false, last
 
 function drivePreview(url){
   if(!url) return '';
-  // Use Google Docs Viewer - works without CSP issues
-  return 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
+  // Convert Drive URL to direct download link for PDF.js
+  const m1=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  const m2=url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  const id=m1?m1[1]:m2?m2[1]:'';
+  if(!id) return '';
+  // Use PDF.js CDN viewer with direct Drive download URL
+  const directUrl='https://drive.google.com/uc?export=download&id='+id;
+  return 'https://mozilla.github.io/pdf.js/web/viewer.html?file='+encodeURIComponent(directUrl);
 }
 
 window.openPDF = (url,nome,prancha,disc) => {
@@ -1015,13 +1021,16 @@ function hasDrawing(){ const d=ctx.getImageData(0,0,dc.width,dc.height).data; fo
 function getSnapshot(){ const t=document.createElement('canvas');t.width=dc.width;t.height=dc.height;const c=t.getContext('2d');c.fillStyle='#1E2130';c.fillRect(0,0,t.width,t.height);c.drawImage(dc,0,0);return t.toDataURL('image/png'); }
 
 function setReqPanel(on){
-  $('req-panel').classList.toggle('on',on);
+  const panel=$('req-panel');
+  if(!panel) return;
+  panel.classList.toggle('on',on);
   if(on){
-    if($('rp-canvas-wrap')){ $('rp-canvas-wrap').style.display='none'; }
-    if($('rp-annotate-wrap')){ $('rp-annotate-wrap').style.display='block'; }
-    if($('rp-snap')){ $('rp-snap').style.display='none'; }
+    const cw=$('rp-canvas-wrap'), aw=$('rp-annotate-wrap'), sn=$('rp-snap');
+    if(cw) cw.style.display='none';
+    if(aw) aw.style.display='block';
+    if(sn) sn.style.display='none';
     rpHasAnnotation=false;
-    initRpCanvas();
+    setTimeout(initRpCanvas, 50);
   }
 }
 window.toggleRequest = () => setReqPanel(!$('req-panel').classList.contains('on'));
