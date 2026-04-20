@@ -4,20 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lista Mestra · Zabaleta Tower</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
   --bg:#0F1117;--bg2:#181B23;--bg3:#1E2130;--bghov:#252A3A;
-  --green:#1D9E75;--gl:rgba(29,158,117,0.15);--gm:#5DCAA5;
+  --green:#1D9E75;--gl:rgba(29,158,117,0.15);--gm:#5DCAA5;--gd:#0F6E56;
   --amber:#EF9F27;--ambl:rgba(239,159,39,0.15);
   --blue:#378ADD;--bluel:rgba(55,138,221,0.15);
   --red:#E24B4A;--redl:rgba(226,75,74,0.15);
   --purple:#9F97EE;--purpl:rgba(159,151,238,0.15);
   --t1:#E8E9ED;--t2:#8B8FA8;--t3:#555970;
   --brd:rgba(255,255,255,0.07);--brd2:rgba(255,255,255,0.12);
-  --r:10px;--rs:6px;--font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+  --r:10px;--rs:6px;--font:"DM Sans",sans-serif;--mono:"DM Mono",monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased}
@@ -30,24 +29,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);min-height:100
 .login-logo svg{width:28px;height:28px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .login-title{font-size:20px;font-weight:500;margin-bottom:.35rem}
 .login-sub{font-size:13px;color:var(--t2);margin-bottom:1.75rem;line-height:1.6}
-.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;font-size:14px;font-family:var(--font);font-weight:500;border:1px solid var(--brd2);border-radius:var(--r);background:white;color:#1F1F1F;cursor:pointer;transition:background .15s}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;font-size:14px;font-family:var(--font);font-weight:500;border:1px solid var(--brd2);border-radius:var(--r);background:white;color:#1F1F1F;cursor:pointer}
 .btn-google:hover{background:#f5f5f5}
 .login-note{font-size:11px;color:var(--t3);margin-top:1rem}
 
-/* NOTIF POPUP */
+/* NOTIF */
 .notif-overlay{display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:1rem}
 .notif-overlay.on{display:flex}
 .notif-box{background:var(--bg2);border:1px solid var(--brd2);border-radius:var(--r);max-width:480px;width:100%;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
-.notif-header{padding:1rem 1.25rem;border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:10px}
-.notif-title{font-size:15px;font-weight:500;flex:1}
+.notif-hdr{padding:1rem 1.25rem;border-bottom:1px solid var(--brd);font-size:15px;font-weight:500}
 .notif-list{overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px}
-.notif-item{background:var(--bg3);border:1px solid var(--green);background:rgba(29,158,117,.07);border-radius:var(--rs);padding:.875rem 1rem}
-.ni-badge{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--gl);color:var(--gm);font-weight:500}
-.ni-prancha{font-size:11px;color:var(--t3);font-family:var(--mono)}
-.ni-text{font-size:13px;color:var(--t1);line-height:1.5;margin:.3rem 0}
-.ni-resolve{font-size:12px;color:var(--t2);margin-top:.5rem;padding:.5rem .75rem;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--brd)}
-.ni-meta{font-size:11px;color:var(--t3);margin-top:.35rem}
-.notif-footer{padding:.875rem 1.25rem;border-top:1px solid var(--brd)}
+.notif-item{background:rgba(29,158,117,.07);border:1px solid var(--green);border-radius:var(--rs);padding:.875rem 1rem}
+.notif-foot{padding:.875rem 1.25rem;border-top:1px solid var(--brd)}
 .btn-notif-close{width:100%;padding:10px;font-size:13px;font-weight:500;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer}
 
 /* HEADER */
@@ -57,18 +50,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);min-height:100
 .htitle{font-size:15px;font-weight:500}
 .hsub{font-size:11px;color:var(--t3);margin-top:1px}
 .hright{margin-left:auto;display:flex;align-items:center;gap:8px}
-.hbtn{display:flex;align-items:center;gap:6px;padding:6px 12px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t2);cursor:pointer;white-space:nowrap;transition:background .1s;text-decoration:none}
+.hbtn{display:flex;align-items:center;gap:6px;padding:6px 12px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t2);cursor:pointer;white-space:nowrap;transition:background .1s}
 .hbtn:hover{background:var(--bghov);color:var(--t1)}
 .hbtn.active{background:var(--gl);border-color:var(--green);color:var(--gm)}
-.hbtn.admin-btn{border-color:var(--purple);color:var(--purple);background:var(--purpl)}
-.user-avatar{width:30px;height:30px;border-radius:50%;border:2px solid var(--brd2);object-fit:cover;cursor:pointer}
-.user-name{font-size:12px;color:var(--t2);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.badge-count{background:var(--red);color:white;border-radius:20px;font-size:10px;padding:1px 6px;font-weight:500;margin-left:2px}
+.hbtn.adm{border-color:var(--purple);color:var(--purple);background:var(--purpl)}
+.user-av{width:30px;height:30px;border-radius:50%;border:2px solid var(--brd2);object-fit:cover;cursor:pointer}
+.uname{font-size:12px;color:var(--t2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge-n{background:var(--red);color:white;border-radius:20px;font-size:10px;padding:1px 6px;font-weight:500;margin-left:2px}
 
 /* VIEWS */
 .view{display:none}.view.on{display:block}
 
-/* STATS GRID */
+/* STATS */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:10px;margin:1.25rem 1.5rem 1rem}
 .stat{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:.85rem 1rem}
 .sv{font-size:26px;font-weight:500;line-height:1}
@@ -80,10 +73,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);min-height:100
 .sw{position:relative;flex:1;min-width:180px}
 .sw input{width:100%;padding:8px 12px 8px 34px;font-size:13px;font-family:var(--font);border:1px solid var(--brd);border-radius:var(--rs);background:var(--bg2);color:var(--t1);outline:none}
 .sw input::placeholder{color:var(--t3)}
-.sw input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.12)}
+.sw input:focus{border-color:var(--green)}
 .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.3;pointer-events:none}
 select{padding:8px 12px;font-size:13px;font-family:var(--font);border:1px solid var(--brd);border-radius:var(--rs);background:var(--bg2);color:var(--t1);outline:none;cursor:pointer}
-select:focus{border-color:var(--green)}
 select option{background:var(--bg2)}
 
 /* TABLE */
@@ -95,219 +87,182 @@ tbody tr{border-bottom:1px solid var(--brd);transition:background .1s}
 tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:var(--bghov)}
 td{padding:10px 14px;font-size:13px;vertical-align:middle}
-
-/* BADGES */
 .b{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
 .ba{background:rgba(29,158,117,.2);color:#5DCAA5}
 .br{background:var(--ambl);color:var(--amber)}
 .bx{background:rgba(255,255,255,.06);color:var(--t2)}
 .bd{background:var(--purpl);color:var(--purple)}
 .bt{background:var(--gl);color:var(--gm)}
-
-/* LINK BTNS */
-.lb{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid var(--brd2);border-radius:var(--rs);font-size:12px;color:var(--t2);text-decoration:none;background:var(--bg3);transition:background .1s,border-color .1s,color .1s;white-space:nowrap;cursor:pointer;font-family:var(--font)}
+.lb{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid var(--brd2);border-radius:var(--rs);font-size:12px;color:var(--t2);text-decoration:none;background:var(--bg3);transition:all .1s;white-space:nowrap;cursor:pointer;font-family:var(--font)}
 .lb:hover{background:var(--gl);border-color:var(--green);color:var(--gm)}
 .lb.ed:hover{background:var(--bluel);border-color:var(--blue);color:var(--blue)}
 .lb+.lb{margin-left:5px}
 .mt{color:var(--t3)}.mn{font-family:var(--mono);font-size:12px;color:var(--t2)}
 .nc{font-weight:500;max-width:220px}.dc{max-width:160px;font-size:12px;color:var(--t2)}
-.es{text-align:center;padding:3rem 1rem;color:var(--t3)}.es p{font-size:14px}
+.es{text-align:center;padding:3rem 1rem;color:var(--t3);font-size:14px}
 
 /* PDF MODAL */
-.ov{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);align-items:center;justify-content:center}
+.ov{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);align-items:center;justify-content:center}
 .ov.open{display:flex}
-.mo{background:var(--bg2);border:1px solid var(--brd2);width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden}
+.mo{background:var(--bg2);width:100%;height:100%;display:flex;flex-direction:column}
 .mh{display:flex;align-items:center;gap:8px;padding:.75rem 1rem;border-bottom:1px solid var(--brd);flex-shrink:0;flex-wrap:wrap}
 .mt2{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mbtns{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
-.mbtn{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border:1px solid var(--brd2);border-radius:var(--rs);font-size:12px;color:var(--t2);background:var(--bg3);cursor:pointer;font-family:var(--font);transition:background .1s,border-color .1s,color .1s;white-space:nowrap;text-decoration:none}
-.mbtn:hover{background:var(--bghov)}
-.mbtn.danger:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
-.mbtn.drawing{background:var(--ambl);border-color:var(--amber);color:var(--amber)}
-.mbtn.req{background:var(--gl);border-color:var(--green);color:var(--gm)}
+.mbtn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--brd2);border-radius:var(--rs);font-size:12px;color:var(--t2);background:var(--bg3);cursor:pointer;font-family:var(--font);transition:all .1s;white-space:nowrap;text-decoration:none}
+.mbtn:hover{background:var(--bghov);color:var(--t1)}
+.mbtn.act{background:var(--ambl);border-color:var(--amber);color:var(--amber)}
+.mbtn.rev{background:var(--gl);border-color:var(--green);color:var(--gm)}
+.mbtn.cls:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
 .mbody{flex:1;display:flex;overflow:hidden}
+
+/* PDF SIDE */
 .pdf-side{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.pdf-scroll{flex:1;overflow:auto;background:#111;display:flex;align-items:flex-start;justify-content:center}
-.pdf-wrap{position:relative;display:inline-block;transform-origin:top center;transition:transform .15s}
-.pdf-frame{display:block;border:none;background:#222}
-.draw-canvas{position:absolute;top:0;left:0;cursor:crosshair;display:none;touch-action:none}
-.draw-canvas.on{display:block}
-.zbar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg3);border-top:1px solid var(--brd);flex-shrink:0}
-.zbtn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer;font-size:16px}
+.pdf-scroll{flex:1;overflow:auto;background:#111;display:flex;align-items:flex-start;justify-content:center;padding:16px}
+.pdf-iframe{border:none;display:block;transform-origin:top center;transition:transform .2s}
+.zbar{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg3);border-top:1px solid var(--brd);flex-shrink:0}
+.zbtn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer;font-size:15px;font-weight:500;transition:background .1s}
 .zbtn:hover{background:var(--bghov);color:var(--t1)}
-.zlevel{font-size:12px;color:var(--t2);min-width:40px;text-align:center}
+.zlabel{font-size:12px;color:var(--t2);min-width:44px;text-align:center}
+
+/* DRAW TOOLBAR */
 .dtbar{display:none;align-items:center;gap:8px;padding:6px 12px;background:rgba(239,159,39,.08);border-top:1px solid rgba(239,159,39,.2);flex-shrink:0;flex-wrap:wrap}
 .dtbar.on{display:flex}
 .dtlabel{font-size:12px;color:var(--amber);font-weight:500}
-.color-dot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
-.color-dot.sel{border-color:white}
-.sz-btn{padding:3px 9px;font-size:12px;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer}
-.sz-btn.sel{background:var(--ambl);border-color:var(--amber);color:var(--amber)}
-.dt-sep{width:1px;height:20px;background:var(--brd2)}
-.clr-btn{padding:3px 9px;font-size:12px;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer}
-.clr-btn:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
+.cdot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.cdot.sel{border-color:white}
+.szbtn{padding:3px 9px;font-size:12px;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer}
+.szbtn.sel{background:var(--ambl);border-color:var(--amber);color:var(--amber)}
+.dsep{width:1px;height:20px;background:var(--brd2)}
+.clrbtn{padding:3px 9px;font-size:12px;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg2);color:var(--t2);cursor:pointer}
+.clrbtn:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
+.sharebtn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:12px;font-family:var(--font);border-radius:var(--rs);cursor:pointer}
 
-/* REQUEST PANEL */
+/* REQ PANEL */
 .req-panel{width:320px;flex-shrink:0;display:none;flex-direction:column;border-left:1px solid var(--brd);background:var(--bg2);overflow:hidden}
 .req-panel.on{display:flex}
 .rph{padding:1rem;border-bottom:1px solid var(--brd);font-size:13px;font-weight:500}
-.rp-scroll{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:12px}
-.rp-img{width:100%;border-radius:var(--rs);border:1px solid var(--brd);display:none}
-.rp-img.on{display:block}
+.rpscroll{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:12px}
 .rp-field label{font-size:11px;color:var(--t3);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
 .rp-field input,.rp-field textarea,.rp-field select{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t1);outline:none;resize:vertical}
 .rp-field input:focus,.rp-field textarea:focus,.rp-field select:focus{border-color:var(--green)}
-.rp-field textarea{min-height:90px}
+.rp-field textarea{min-height:80px}
+.rp-field select option{background:var(--bg2)}
 .rp-actions{padding:1rem;border-top:1px solid var(--brd);display:flex;gap:8px;flex-direction:column}
-.btn-submit{padding:10px;font-size:13px;font-weight:500;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer}
-.btn-submit:hover{background:var(--gm);color:#0F6E56}
-.btn-cancel-req{padding:8px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
+.btn-send{padding:10px;font-size:13px;font-weight:500;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer}
+.btn-send:hover{background:var(--gm);color:var(--gd)}
+.btn-cancel{padding:8px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
 
-/* GESTOR KANBAN */
-.gv-header{padding:1.25rem 1.5rem .75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+/* KANBAN */
+.gv-hdr{padding:1.25rem 1.5rem .75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .gv-title{font-size:18px;font-weight:500}
-.kanban-wrap{padding:0 1.5rem 2rem;overflow-x:auto;display:flex;gap:14px;min-height:calc(100vh - 200px);align-items:flex-start}
-.kanban-col{flex:0 0 290px;display:flex;flex-direction:column;gap:0;min-width:290px}
-.col-header{display:flex;align-items:center;gap:8px;padding:.75rem 1rem;border-radius:var(--r) var(--r) 0 0;margin-bottom:0}
-.col-header.c0{background:rgba(239,159,39,.12);border:1px solid rgba(239,159,39,.2);border-bottom:none}
-.col-header.c1{background:rgba(55,138,221,.12);border:1px solid rgba(55,138,221,.2);border-bottom:none}
-.col-header.c2{background:rgba(159,151,238,.12);border:1px solid rgba(159,151,238,.2);border-bottom:none}
-.col-header.c3{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.2);border-bottom:none}
-.col-title{font-size:12px;font-weight:500;flex:1}
-.col-title.c0{color:var(--amber)}
-.col-title.c1{color:var(--blue)}
-.col-title.c2{color:var(--purple)}
-.col-title.c3{color:var(--gm)}
-.col-count{font-size:11px;padding:1px 7px;border-radius:20px;font-weight:500}
-.col-count.c0{background:rgba(239,159,39,.2);color:var(--amber)}
-.col-count.c1{background:rgba(55,138,221,.2);color:var(--blue)}
-.col-count.c2{background:rgba(159,151,238,.2);color:var(--purple)}
-.col-count.c3{background:rgba(29,158,117,.2);color:var(--gm)}
-.col-body{background:var(--bg3);border-radius:0 0 var(--r) var(--r);padding:.75rem;display:flex;flex-direction:column;gap:10px;min-height:120px;border:1px solid var(--brd);border-top:none;transition:background .15s}
-.col-body.c0{border-color:rgba(239,159,39,.2)}
-.col-body.c1{border-color:rgba(55,138,221,.2)}
-.col-body.c2{border-color:rgba(159,151,238,.2)}
-.col-body.c3{border-color:rgba(29,158,117,.2)}
-.col-body.drag-over{background:var(--bghov)}
-.col-empty{text-align:center;padding:1.5rem .5rem;font-size:12px;color:var(--t3)}
-/* KANBAN CARD */
-.kcard{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--rs);padding:.875rem;cursor:grab;transition:box-shadow .15s,transform .15s;user-select:none}
+.kanban-wrap{padding:0 1.5rem 2rem;overflow-x:auto;display:flex;gap:14px;min-height:calc(100vh - 180px);align-items:flex-start}
+.kcol{flex:0 0 285px;min-width:285px;display:flex;flex-direction:column}
+.kcol-hdr{display:flex;align-items:center;gap:8px;padding:.7rem 1rem;border-radius:var(--r) var(--r) 0 0;border-bottom:none}
+.kcol-hdr.c0{background:rgba(239,159,39,.12);border:1px solid rgba(239,159,39,.25)}
+.kcol-hdr.c1{background:rgba(55,138,221,.12);border:1px solid rgba(55,138,221,.25)}
+.kcol-hdr.c2{background:rgba(159,151,238,.12);border:1px solid rgba(159,151,238,.25)}
+.kcol-hdr.c3{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.25)}
+.kcol-title{font-size:12px;font-weight:500;flex:1}
+.kcol-title.c0{color:var(--amber)}.kcol-title.c1{color:var(--blue)}.kcol-title.c2{color:var(--purple)}.kcol-title.c3{color:var(--gm)}
+.kcol-cnt{font-size:11px;padding:1px 7px;border-radius:20px;font-weight:500}
+.kcol-cnt.c0{background:rgba(239,159,39,.2);color:var(--amber)}
+.kcol-cnt.c1{background:rgba(55,138,221,.2);color:var(--blue)}
+.kcol-cnt.c2{background:rgba(159,151,238,.2);color:var(--purple)}
+.kcol-cnt.c3{background:rgba(29,158,117,.2);color:var(--gm)}
+.kcol-body{background:var(--bg3);border-radius:0 0 var(--r) var(--r);padding:.75rem;display:flex;flex-direction:column;gap:10px;min-height:100px;border:1px solid var(--brd);border-top:none;transition:background .15s}
+.kcol-body.c0{border-color:rgba(239,159,39,.25)}.kcol-body.c1{border-color:rgba(55,138,221,.25)}
+.kcol-body.c2{border-color:rgba(159,151,238,.25)}.kcol-body.c3{border-color:rgba(29,158,117,.25)}
+.kcol-body.drag-over{background:var(--bghov)}
+.kcol-empty{text-align:center;padding:1.5rem .5rem;font-size:12px;color:var(--t3)}
+.kcard{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--rs);padding:.875rem;cursor:grab;user-select:none;transition:box-shadow .15s}
 .kcard:active{cursor:grabbing}
-.kcard.dragging{opacity:.5;transform:scale(.97)}
-.kcard.has-snap{border-left:3px solid var(--amber)}
+.kcard.dragging{opacity:.5}
 .kcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.35rem}
 .kcard-prancha{font-size:10px;color:var(--t3);font-family:var(--mono)}
-.kcard-prio{font-size:10px;padding:1px 6px;border-radius:20px;font-weight:500;white-space:nowrap}
-.kp-urg{background:var(--redl);color:var(--red)}
-.kp-norm{background:var(--ambl);color:var(--amber)}
-.kp-baixa{background:rgba(255,255,255,.06);color:var(--t2)}
+.kcard-prio{font-size:10px;padding:1px 6px;border-radius:20px;font-weight:500}
+.kp-u{background:var(--redl);color:var(--red)}.kp-n{background:var(--ambl);color:var(--amber)}.kp-b{background:rgba(255,255,255,.06);color:var(--t2)}
 .kcard-nome{font-size:13px;font-weight:500;margin-bottom:.3rem;line-height:1.4}
 .kcard-desc{font-size:12px;color:var(--t2);line-height:1.5;margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.kcard-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
-.kcard-autor{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3)}
-.kcard-avatar{width:18px;height:18px;border-radius:50%;object-fit:cover}
+.kcard-foot{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.kcard-autor{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:5px}
+.kcard-av{width:18px;height:18px;border-radius:50%;object-fit:cover}
 .kcard-date{font-size:10px;color:var(--t3)}
-.kcard-actions{display:flex;gap:4px}
-.kcard-btn{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:4px;background:var(--bg3);color:var(--t2);cursor:pointer;transition:background .1s}
-.kcard-btn:hover{background:var(--bghov);color:var(--t1)}
-.kcard-btn.del:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
 .kcard-snap{width:100%;border-radius:4px;margin-bottom:.5rem;border:1px solid var(--brd);cursor:pointer;max-height:80px;object-fit:cover}
-/* DETAIL DRAWER */
-.drawer-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.6)}
-.drawer-overlay.on{display:block}
-.drawer{position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;background:var(--bg2);border-left:1px solid var(--brd2);z-index:3001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s}
-.drawer.on{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:1rem 1.25rem;border-bottom:1px solid var(--brd);flex-shrink:0}
-.drawer-title{font-size:14px;font-weight:500;flex:1}
-.drawer-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t2);cursor:pointer}
-.drawer-close:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
-.drawer-body{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:16px}
-.drawer-section label{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px}
-.drawer-section p{font-size:13px;color:var(--t1);line-height:1.6}
-.drawer-section select,.drawer-section input,.drawer-section textarea{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t1);outline:none;resize:vertical}
-.drawer-section select:focus,.drawer-section input:focus,.drawer-section textarea:focus{border-color:var(--green)}
-.drawer-section textarea{min-height:80px}
-.drawer-section select option{background:var(--bg2)}
-.drawer-snap{width:100%;border-radius:var(--rs);border:1px solid var(--brd);cursor:pointer;margin-top:6px}
-.drawer-foot{padding:1rem 1.25rem;border-top:1px solid var(--brd);display:flex;gap:8px;flex-shrink:0}
-.btn-save-drawer{flex:1;padding:10px;font-size:13px;font-weight:500;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer}
-.btn-save-drawer:hover{background:var(--gm);color:#0F6E56}
-.btn-del-drawer{padding:10px 14px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
-.btn-del-drawer:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
-.no-tasks{text-align:center;padding:4rem 1rem;color:var(--t3);font-size:14px}
-.tc-status{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500}
-.tc-open{background:var(--ambl);color:var(--amber)}
-.tc-done2{background:var(--gl);color:var(--gm)}
-.tc-prio-urg{background:var(--redl);color:var(--red)}
-.tc-prio-norm{background:var(--ambl);color:var(--amber)}
-.tc-prio-baixa{background:rgba(255,255,255,.06);color:var(--t2)}
-@media(max-width:600px){
-  .kanban-wrap{padding:0 .75rem 2rem}
-  .kanban-col{flex:0 0 260px;min-width:260px}
-  .drawer{width:100vw}
-}
 
-/* ── ANALYTICS VIEW ── */
-.analytics-wrap{padding:1.5rem}
-.an-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
+/* DRAWER */
+.drw-ov{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.6)}
+.drw-ov.on{display:block}
+.drw{position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;background:var(--bg2);border-left:1px solid var(--brd2);z-index:3001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s}
+.drw.on{transform:translateX(0)}
+.drw-hdr{display:flex;align-items:center;gap:10px;padding:1rem 1.25rem;border-bottom:1px solid var(--brd)}
+.drw-title{font-size:14px;font-weight:500;flex:1}
+.drw-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t2);cursor:pointer}
+.drw-close:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
+.drw-body{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:14px}
+.drw-sec label{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px}
+.drw-sec p{font-size:13px;color:var(--t1);line-height:1.6}
+.drw-sec select,.drw-sec input,.drw-sec textarea{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t1);outline:none;resize:vertical}
+.drw-sec select:focus,.drw-sec input:focus,.drw-sec textarea:focus{border-color:var(--green)}
+.drw-sec textarea{min-height:75px}
+.drw-sec select option{background:var(--bg2)}
+.drw-snap{width:100%;border-radius:var(--rs);border:1px solid var(--brd);cursor:pointer;margin-top:6px}
+.drw-foot{padding:1rem 1.25rem;border-top:1px solid var(--brd);display:flex;gap:8px}
+.btn-save-drw{flex:1;padding:10px;font-size:13px;font-weight:500;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer}
+.btn-save-drw:hover{background:var(--gm);color:var(--gd)}
+.btn-del-drw{padding:10px 14px;font-size:13px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
+.btn-del-drw:hover{background:var(--redl);border-color:var(--red);color:var(--red)}
+.resolve-info{background:var(--bg3);border-radius:var(--rs);padding:.75rem;font-size:12px;color:var(--t2);line-height:1.6}
+
+/* ANALYTICS */
+.an-wrap{padding:1.5rem}
+.an-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
 .an-title{font-size:18px;font-weight:500}
-.an-period{display:flex;gap:6px}
 .period-btn{padding:5px 12px;font-size:12px;font-family:var(--font);border:1px solid var(--brd2);border-radius:20px;background:var(--bg3);color:var(--t2);cursor:pointer}
 .period-btn.sel{background:var(--gl);border-color:var(--green);color:var(--gm)}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem}
-.kpi{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:1rem 1.1rem}
-.kpi-val{font-size:28px;font-weight:500;line-height:1}
-.kpi-label{font-size:11px;color:var(--t3);margin-top:4px}
-.kpi.g .kpi-val{color:var(--green)}
-.kpi.b .kpi-val{color:var(--blue)}
-.kpi.a .kpi-val{color:var(--amber)}
-.kpi.p .kpi-val{color:var(--purple)}
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:16px;margin-bottom:1.5rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
+.kpi{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:.9rem 1rem}
+.kpi-val{font-size:26px;font-weight:500;line-height:1}
+.kpi-lbl{font-size:11px;color:var(--t3);margin-top:4px}
+.kpi.g .kpi-val{color:var(--green)}.kpi.b .kpi-val{color:var(--blue)}.kpi.a .kpi-val{color:var(--amber)}.kpi.p .kpi-val{color:var(--purple)}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px;margin-bottom:1.5rem}
 .chart-card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:1.25rem}
-.chart-title{font-size:13px;font-weight:500;margin-bottom:1rem;color:var(--t1)}
-.chart-wrap{position:relative;height:240px}
-.an-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px;margin-bottom:1.5rem}
-.an-table-card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
-.an-table-title{padding:.875rem 1rem;font-size:13px;font-weight:500;border-bottom:1px solid var(--brd)}
-.an-table{width:100%;border-collapse:collapse}
-.an-table th{padding:8px 12px;font-size:11px;color:var(--t3);text-align:left;border-bottom:1px solid var(--brd);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
-.an-table td{padding:9px 12px;font-size:12px;border-bottom:1px solid var(--brd);color:var(--t1)}
-.an-table tr:last-child td{border-bottom:none}
-.an-table tr:hover td{background:var(--bghov)}
-.rank-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:500;background:var(--bg3);color:var(--t3);margin-right:6px}
-.rank-num.top{background:rgba(239,159,39,.2);color:var(--amber)}
-.bar-mini{height:4px;border-radius:2px;background:var(--green);margin-top:4px;transition:width .4s}
-.an-loading{text-align:center;padding:3rem;color:var(--t3);font-size:14px}
-.users-table{width:100%;border-collapse:collapse}
-.users-table th{padding:8px 12px;font-size:11px;color:var(--t3);text-align:left;border-bottom:1px solid var(--brd);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
-.users-table td{padding:9px 12px;font-size:12px;border-bottom:1px solid var(--brd)}
-.users-table tr:last-child td{border-bottom:none}
-.users-table tr:hover td{background:var(--bghov)}
-.u-avatar{width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px}
-.refresh-btn{display:flex;align-items:center;gap:6px;padding:6px 12px;font-size:12px;font-family:var(--font);border:1px solid var(--brd2);border-radius:var(--rs);background:var(--bg3);color:var(--t2);cursor:pointer}
-.refresh-btn:hover{background:var(--bghov)}
+.chart-title{font-size:13px;font-weight:500;margin-bottom:1rem}
+.chart-wrap{position:relative;height:220px}
+.an-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;margin-bottom:1.5rem}
+.an-tc{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.an-tc-title{padding:.875rem 1rem;font-size:13px;font-weight:500;border-bottom:1px solid var(--brd)}
+.an-tbl{width:100%;border-collapse:collapse}
+.an-tbl th{padding:8px 12px;font-size:11px;color:var(--t3);text-align:left;border-bottom:1px solid var(--brd);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.an-tbl td{padding:9px 12px;font-size:12px;border-bottom:1px solid var(--brd);color:var(--t1)}
+.an-tbl tr:last-child td{border-bottom:none}
+.an-tbl tr:hover td{background:var(--bghov)}
+.rk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:500;background:var(--bg3);color:var(--t3);margin-right:6px}
+.rk.top{background:rgba(239,159,39,.2);color:var(--amber)}
+.u-av{width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px}
 
+/* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.95);align-items:center;justify-content:center;cursor:zoom-out}
 .lightbox.open{display:flex}
 .lightbox img{max-width:95vw;max-height:95vh;border-radius:var(--rs)}
+
 footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--t3)}
 @media(max-width:768px){
+  .hdr{padding:0 1rem}.hsub,.uname{display:none}
+  .stats,.tb,.tw,.kanban-wrap,.gv-hdr,.an-wrap{padding-left:.75rem;padding-right:.75rem;margin-left:0;margin-right:0}
+  .kcol{flex:0 0 260px;min-width:260px}
   .charts-grid,.an-tables{grid-template-columns:1fr}
-  .hdr{padding:0 1rem}.hsub,.user-name{display:none}
-  .stats,.tb,.tw,.task-list,.gv-header,.analytics-wrap{padding-left:.75rem;padding-right:.75rem;margin-left:0;margin-right:0}
   .req-panel.on{position:fixed;inset:0;width:100%;z-index:500;border-left:none}
+  .drw{width:100vw}
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen on" id="login-screen">
   <div class="login-box">
     <div class="login-logo"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
     <div class="login-title">Zabaleta Tower</div>
     <div class="login-sub">Lista Mestra de Projetos<br>Dom Joaquim 785</div>
-    <button class="btn-google" onclick="loginGoogle()">
+    <button class="btn-google" id="btn-google-login">
       <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Entrar com Google
     </button>
@@ -315,32 +270,30 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--t3)}
   </div>
 </div>
 
-<!-- NOTIF -->
 <div class="notif-overlay" id="notif-overlay">
   <div class="notif-box">
-    <div class="notif-header"><div class="notif-title">🔔 Suas revisões foram respondidas</div></div>
+    <div class="notif-hdr">🔔 Suas revisões foram respondidas</div>
     <div class="notif-list" id="notif-list"></div>
-    <div class="notif-footer"><button class="btn-notif-close" onclick="document.getElementById('notif-overlay').classList.remove('on')">Entendido, fechar</button></div>
+    <div class="notif-foot"><button class="btn-notif-close" id="btn-notif-close">Entendido, fechar</button></div>
   </div>
 </div>
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="logo"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
   <div><div class="htitle">Lista Mestra · Zabaleta Tower</div><div class="hsub">Dom Joaquim 785</div></div>
   <div class="hright">
-    <button class="hbtn active" id="btn-lista" onclick="showView('lista')">
+    <button class="hbtn active" id="btn-lista" data-view="lista">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Projetos
     </button>
-    <button class="hbtn" id="btn-gestor" onclick="showView('gestor')">
+    <button class="hbtn" id="btn-gestor" data-view="gestor">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      Revisões <span class="badge-count" id="badge-count" style="display:none">0</span>
+      Revisões<span class="badge-n" id="badge-n" style="display:none">0</span>
     </button>
-    <button class="hbtn admin-btn" id="btn-analytics" style="display:none" onclick="showView('analytics')">
+    <button class="hbtn adm" id="btn-analytics" data-view="analytics" style="display:none">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Indicadores
     </button>
-    <span class="user-name" id="user-name"></span>
-    <img class="user-avatar" id="user-avatar" src="" alt="" style="display:none" title="Sair" onclick="logout()">
+    <span class="uname" id="uname"></span>
+    <img class="user-av" id="user-av" src="" alt="" style="display:none" title="Sair" id="user-av">
   </div>
 </header>
 
@@ -356,285 +309,222 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--t3)}
   <div class="tb">
     <div class="sw">
       <span class="si"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-      <input type="text" id="q" placeholder="Buscar por nome, prancha, disciplina..." oninput="renderTable()">
+      <input type="text" id="q" placeholder="Buscar por nome, prancha, disciplina...">
     </div>
-    <select id="fd" onchange="renderTable()"><option value="">Todas as disciplinas</option></select>
-    <select id="ft" onchange="renderTable()"><option value="">Todos os tipos</option></select>
-    <select id="fs" onchange="renderTable()"><option value="">Todos os status</option></select>
+    <select id="fd"><option value="">Todas as disciplinas</option></select>
+    <select id="ft"><option value="">Todos os tipos</option></select>
+    <select id="fs"><option value="">Todos os status</option></select>
   </div>
-  <div class="tw">
-    <div class="ts">
-      <table>
-        <thead><tr><th>Status</th><th>Disciplina</th><th>Tipo</th><th>Nº Prancha</th><th>Nome</th><th>Descrição</th><th>Rev.</th><th>Acesso</th></tr></thead>
-        <tbody id="tb"></tbody>
-      </table>
-    </div>
-    <div class="es" id="em" style="display:none"><p>Nenhuma prancha encontrada.</p></div>
-  </div>
+  <div class="tw"><div class="ts">
+    <table>
+      <thead><tr><th>Status</th><th>Disciplina</th><th>Tipo</th><th>Nº Prancha</th><th>Nome</th><th>Descrição</th><th>Rev.</th><th>Acesso</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div><div class="es" id="em" style="display:none">Nenhuma prancha encontrada.</div></div>
   <footer>Lista Mestra · Zabaleta Tower Dom Joaquim · 2026</footer>
 </div>
 
 <!-- VIEW GESTOR KANBAN -->
 <div class="view" id="view-gestor">
-  <div class="gv-header">
+  <div class="gv-hdr">
     <div class="gv-title">Quadro de revisões</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <select id="gf-prio" onchange="renderKanban()"><option value="">Todas as prioridades</option><option value="urgente">🔴 Urgente</option><option value="normal">● Normal</option><option value="baixa">⬇ Baixa</option></select>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select id="gf-prio"><option value="">Todas as prioridades</option><option value="urgente">🔴 Urgente</option><option value="normal">● Normal</option><option value="baixa">⬇ Baixa</option></select>
     </div>
   </div>
-  <div class="kanban-wrap" id="kanban-wrap">
-    <div class="kanban-col" id="col-solicitado">
-      <div class="col-header c0"><span class="col-title c0">📬 Revisão solicitada</span><span class="col-count c0" id="cnt-0">0</span></div>
-      <div class="col-body c0" id="cb-solicitado" data-col="solicitado" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)"><div class="col-empty">Nenhuma revisão</div></div>
-    </div>
-    <div class="kanban-col" id="col-andamento-interno">
-      <div class="col-header c1"><span class="col-title c1">🔧 Em andamento interno</span><span class="col-count c1" id="cnt-1">0</span></div>
-      <div class="col-body c1" id="cb-andamento-interno" data-col="andamento-interno" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)"><div class="col-empty">Nenhuma revisão</div></div>
-    </div>
-    <div class="kanban-col" id="col-andamento-externo">
-      <div class="col-header c2"><span class="col-title c2">🏗 Em andamento externo</span><span class="col-count c2" id="cnt-2">0</span></div>
-      <div class="col-body c2" id="cb-andamento-externo" data-col="andamento-externo" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)"><div class="col-empty">Nenhuma revisão</div></div>
-    </div>
-    <div class="kanban-col" id="col-concluido">
-      <div class="col-header c3"><span class="col-title c3">✅ Revisão concluída</span><span class="col-count c3" id="cnt-3">0</span></div>
-      <div class="col-body c3" id="cb-concluido" data-col="concluido" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)"><div class="col-empty">Nenhuma revisão</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- CARD DETAIL DRAWER -->
-<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div class="drawer-title" id="drawer-title">Detalhes da revisão</div>
-    <button class="drawer-close" onclick="closeDrawer()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-  <div class="drawer-body">
-    <div class="drawer-section">
-      <label>Projeto</label>
-      <p id="dr-nome">—</p>
-      <p id="dr-prancha" style="font-size:11px;color:var(--t3);font-family:var(--mono);margin-top:2px"></p>
-    </div>
-    <div class="drawer-section">
-      <label>Solicitado por</label>
-      <p id="dr-autor">—</p>
-    </div>
-    <div class="drawer-section">
-      <label>Descrição do problema</label>
-      <p id="dr-desc">—</p>
-    </div>
-    <div class="drawer-section" id="dr-snap-wrap" style="display:none">
-      <label>Apontamento</label>
-      <img id="dr-snap" class="drawer-snap" src="" alt="Apontamento" onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('open')">
-    </div>
-    <div class="drawer-section">
-      <label>Coluna / Status</label>
-      <select id="dr-col" onchange="updateCardCol()">
-        <option value="solicitado">📬 Revisão solicitada</option>
-        <option value="andamento-interno">🔧 Em andamento interno</option>
-        <option value="andamento-externo">🏗 Em andamento externo</option>
-        <option value="concluido">✅ Revisão concluída</option>
-      </select>
-    </div>
-    <div class="drawer-section">
-      <label>Prioridade</label>
-      <select id="dr-prio" onchange="updateCardPrio()">
-        <option value="normal">● Normal</option>
-        <option value="urgente">🔴 Urgente</option>
-        <option value="baixa">⬇ Baixa</option>
-      </select>
-    </div>
-    <div class="drawer-section" id="dr-resolve-wrap">
-      <label>Como foi resolvido</label>
-      <textarea id="dr-resolve" placeholder="Descreva o que foi feito..."></textarea>
-    </div>
-    <div class="drawer-section" id="dr-rev-wrap">
-      <label>Revisão gerada (ex: R03)</label>
-      <input type="text" id="dr-rev" placeholder="Ex: R03">
-    </div>
-  </div>
-  <div class="drawer-foot">
-    <button class="btn-save-drawer" onclick="saveDrawer()">Salvar alterações</button>
-    <button class="btn-del-drawer" onclick="deleteDrawerTask()">Excluir</button>
+  <div class="kanban-wrap">
+    <div class="kcol"><div class="kcol-hdr c0"><span class="kcol-title c0">📬 Revisão solicitada</span><span class="kcol-cnt c0" id="kc0">0</span></div><div class="kcol-body c0" id="kb-solicitado" data-col="solicitado"><div class="kcol-empty">Nenhuma revisão</div></div></div>
+    <div class="kcol"><div class="kcol-hdr c1"><span class="kcol-title c1">🔧 Andamento interno</span><span class="kcol-cnt c1" id="kc1">0</span></div><div class="kcol-body c1" id="kb-andamento-interno" data-col="andamento-interno"><div class="kcol-empty">Nenhuma revisão</div></div></div>
+    <div class="kcol"><div class="kcol-hdr c2"><span class="kcol-title c2">🏗 Andamento externo</span><span class="kcol-cnt c2" id="kc2">0</span></div><div class="kcol-body c2" id="kb-andamento-externo" data-col="andamento-externo"><div class="kcol-empty">Nenhuma revisão</div></div></div>
+    <div class="kcol"><div class="kcol-hdr c3"><span class="kcol-title c3">✅ Revisão concluída</span><span class="kcol-cnt c3" id="kc3">0</span></div><div class="kcol-body c3" id="kb-concluido" data-col="concluido"><div class="kcol-empty">Nenhuma revisão</div></div></div>
   </div>
 </div>
 
 <!-- VIEW ANALYTICS -->
 <div class="view" id="view-analytics">
-  <div class="analytics-wrap">
-    <div class="an-header">
+  <div class="an-wrap">
+    <div class="an-hdr">
       <div class="an-title">📊 Indicadores do projeto</div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <div class="an-period">
-          <button class="period-btn sel" data-days="7" onclick="setPeriod(this)">7d</button>
-          <button class="period-btn" data-days="30" onclick="setPeriod(this)">30d</button>
-          <button class="period-btn" data-days="90" onclick="setPeriod(this)">90d</button>
-          <button class="period-btn" data-days="0" onclick="setPeriod(this)">Tudo</button>
+        <div style="display:flex;gap:4px">
+          <button class="period-btn sel" data-days="7">7d</button>
+          <button class="period-btn" data-days="30">30d</button>
+          <button class="period-btn" data-days="90">90d</button>
+          <button class="period-btn" data-days="0">Tudo</button>
         </div>
-        <button class="refresh-btn" onclick="loadAnalytics()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-          Atualizar
-        </button>
+        <button class="hbtn" id="btn-reload-analytics">↺ Atualizar</button>
       </div>
     </div>
-
-    <!-- KPIs -->
     <div class="kpi-grid">
-      <div class="kpi g"><div class="kpi-val" id="kpi-acessos">—</div><div class="kpi-label">Acessos a PDFs</div></div>
-      <div class="kpi b"><div class="kpi-val" id="kpi-downloads">—</div><div class="kpi-label">Downloads (editável)</div></div>
-      <div class="kpi a"><div class="kpi-val" id="kpi-revisoes">—</div><div class="kpi-label">Pedidos de revisão</div></div>
-      <div class="kpi p"><div class="kpi-val" id="kpi-tempo">—</div><div class="kpi-label">Tempo médio no PDF</div></div>
-      <div class="kpi"><div class="kpi-val" id="kpi-usuarios">—</div><div class="kpi-label">Usuários ativos</div></div>
+      <div class="kpi g"><div class="kpi-val" id="kpi-ac">—</div><div class="kpi-lbl">Acessos a PDFs</div></div>
+      <div class="kpi b"><div class="kpi-val" id="kpi-dl">—</div><div class="kpi-lbl">Downloads editável</div></div>
+      <div class="kpi a"><div class="kpi-val" id="kpi-rv">—</div><div class="kpi-lbl">Pedidos de revisão</div></div>
+      <div class="kpi p"><div class="kpi-val" id="kpi-tm">—</div><div class="kpi-lbl">Tempo médio PDF</div></div>
+      <div class="kpi"><div class="kpi-val" id="kpi-us">—</div><div class="kpi-lbl">Usuários ativos</div></div>
     </div>
-
-    <!-- CHARTS -->
     <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-title">Acessos por dia</div>
-        <div class="chart-wrap"><canvas id="chart-daily"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Acessos por disciplina</div>
-        <div class="chart-wrap"><canvas id="chart-disc"></canvas></div>
-      </div>
+      <div class="chart-card"><div class="chart-title">Acessos por dia</div><div class="chart-wrap"><canvas id="chart-daily"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Acessos por disciplina</div><div class="chart-wrap"><canvas id="chart-disc"></canvas></div></div>
     </div>
-
-    <!-- TABLES -->
     <div class="an-tables">
-      <!-- Top projetos acessados -->
-      <div class="an-table-card">
-        <div class="an-table-title">🏆 Top projetos mais acessados</div>
-        <table class="an-table">
-          <thead><tr><th>#</th><th>Projeto</th><th>Acessos</th><th>Tempo médio</th></tr></thead>
-          <tbody id="tbl-top-proj"></tbody>
-        </table>
-      </div>
-      <!-- Top revisões -->
-      <div class="an-table-card">
-        <div class="an-table-title">📋 Projetos com mais revisões solicitadas</div>
-        <table class="an-table">
-          <thead><tr><th>#</th><th>Projeto</th><th>Revisões</th><th>Status</th></tr></thead>
-          <tbody id="tbl-top-rev"></tbody>
-        </table>
-      </div>
+      <div class="an-tc"><div class="an-tc-title">🏆 Top projetos acessados</div><table class="an-tbl"><thead><tr><th>#</th><th>Projeto</th><th>Acessos</th><th>Tempo médio</th></tr></thead><tbody id="tbl-top-proj"></tbody></table></div>
+      <div class="an-tc"><div class="an-tc-title">📋 Mais revisões solicitadas</div><table class="an-tbl"><thead><tr><th>#</th><th>Projeto</th><th>Revisões</th><th>Status</th></tr></thead><tbody id="tbl-top-rev"></tbody></table></div>
     </div>
-
     <div class="an-tables">
-      <!-- Downloads -->
-      <div class="an-table-card">
-        <div class="an-table-title">⬇ Top arquivos editáveis baixados</div>
-        <table class="an-table">
-          <thead><tr><th>#</th><th>Arquivo</th><th>Downloads</th></tr></thead>
-          <tbody id="tbl-downloads"></tbody>
-        </table>
-      </div>
-      <!-- Usuários -->
-      <div class="an-table-card">
-        <div class="an-table-title">👥 Atividade por usuário</div>
-        <table class="an-table">
-          <thead><tr><th>Usuário</th><th>Acessos</th><th>Tempo total</th><th>Revisões</th></tr></thead>
-          <tbody id="tbl-users"></tbody>
-        </table>
-      </div>
+      <div class="an-tc"><div class="an-tc-title">⬇ Top downloads editável</div><table class="an-tbl"><thead><tr><th>#</th><th>Arquivo</th><th>Downloads</th></tr></thead><tbody id="tbl-dl"></tbody></table></div>
+      <div class="an-tc"><div class="an-tc-title">👥 Atividade por usuário</div><table class="an-tbl"><thead><tr><th>Usuário</th><th>Acessos</th><th>Tempo</th><th>Revisões</th></tr></thead><tbody id="tbl-users"></tbody></table></div>
     </div>
-
   </div>
 </div>
 
 <!-- PDF MODAL -->
-<div class="ov" id="ov" onclick="closeModal(event)">
-  <div class="mo" onclick="event.stopPropagation()">
+<div class="ov" id="ov">
+  <div class="mo">
     <div class="mh">
-      <div class="mt2" id="mtitle">—</div>
-      <div class="mbtns">
-        <a class="mbtn" id="mlink" href="#" target="_blank" rel="noopener">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Drive
-        </a>
-        <button class="mbtn" id="btn-draw-toggle" onclick="toggleDraw()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>Anotar
-        </button>
-        <button class="mbtn req" id="btn-req-toggle" onclick="toggleRequest()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Pedir revisão
-        </button>
-        <button class="mbtn danger" onclick="closeModal()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Fechar
-        </button>
-      </div>
+      <div class="mt2" id="mt2">—</div>
+      <a class="mbtn" id="mlink" href="#" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Drive
+      </a>
+      <button class="mbtn act" id="btn-draw">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>Anotar
+      </button>
+      <button class="mbtn rev" id="btn-rev">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Pedir revisão
+      </button>
+      <button class="mbtn cls" id="btn-close-modal">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Fechar
+      </button>
     </div>
     <div class="mbody">
       <div class="pdf-side">
-        <div class="pdf-scroll"><div class="pdf-wrap" id="pdf-wrap">
-          <iframe class="pdf-frame" id="pdf-frame" src="" width="960" height="680" allowfullscreen allow="fullscreen"></iframe>
-          <canvas class="draw-canvas" id="draw-canvas" width="960" height="680"></canvas>
-        </div></div>
+        <div class="pdf-scroll" id="pdf-scroll">
+          <iframe class="pdf-iframe" id="pdf-iframe" src="" width="960" height="680"></iframe>
+        </div>
         <div class="zbar">
-          <button class="zbtn" onclick="zoom(-0.25)">−</button>
-          <span class="zlevel" id="zlevel">100%</span>
-          <button class="zbtn" onclick="zoom(+0.25)">+</button>
-          <input type="range" min="0.5" max="3" step="0.25" value="1" id="zslider" oninput="setZoom(parseFloat(this.value))" style="flex:1;max-width:120px;accent-color:var(--green)">
-          <button class="zbtn" onclick="setZoom(1)" style="font-size:11px;width:auto;padding:0 8px">Reset</button>
+          <button class="zbtn" id="zm--">−−</button>
+          <button class="zbtn" id="zm-">−</button>
+          <span class="zlabel" id="zlabel">100%</span>
+          <button class="zbtn" id="zm+">+</button>
+          <button class="zbtn" id="zm++">++</button>
+          <input type="range" id="zslider" min="0.25" max="8" step="0.25" value="1" style="flex:1;max-width:140px;accent-color:var(--green)">
+          <button class="zbtn" id="zm0" style="font-size:11px;width:auto;padding:0 8px">Reset</button>
         </div>
         <div class="dtbar" id="dtbar">
-          <span class="dtlabel">✏ Modo anotação</span>
-          <div class="dt-sep"></div>
-          <div class="color-dot sel" style="background:#EF4444" data-color="#EF4444" onclick="setPenColor(this)"></div>
-          <div class="color-dot" style="background:#F97316" data-color="#F97316" onclick="setPenColor(this)"></div>
-          <div class="color-dot" style="background:#FACC15" data-color="#FACC15" onclick="setPenColor(this)"></div>
-          <div class="color-dot" style="background:#4ADE80" data-color="#4ADE80" onclick="setPenColor(this)"></div>
-          <div class="color-dot" style="background:#60A5FA" data-color="#60A5FA" onclick="setPenColor(this)"></div>
-          <div class="dt-sep"></div>
-          <button class="sz-btn sel" data-size="3" onclick="setPenSize(this)">P</button>
-          <button class="sz-btn" data-size="6" onclick="setPenSize(this)">M</button>
-          <button class="sz-btn" data-size="12" onclick="setPenSize(this)">G</button>
-          <div class="dt-sep"></div>
-          <button class="clr-btn" onclick="clearCanvas()">Limpar</button>
-          <div class="dt-sep"></div>
-          <button onclick="saveDraftImage()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:12px;font-family:var(--font);border:1px solid var(--blue);border-radius:var(--rs);background:var(--bluel);color:var(--blue);cursor:pointer">
+          <span class="dtlabel">✏ Rascunho</span>
+          <div class="dsep"></div>
+          <div class="cdot sel" style="background:#EF4444" data-c="#EF4444"></div>
+          <div class="cdot" style="background:#F97316" data-c="#F97316"></div>
+          <div class="cdot" style="background:#FACC15" data-c="#FACC15"></div>
+          <div class="cdot" style="background:#4ADE80" data-c="#4ADE80"></div>
+          <div class="cdot" style="background:#60A5FA" data-c="#60A5FA"></div>
+          <div class="dsep"></div>
+          <button class="szbtn sel" data-s="3">P</button>
+          <button class="szbtn" data-s="6">M</button>
+          <button class="szbtn" data-s="12">G</button>
+          <div class="dsep"></div>
+          <button class="clrbtn" id="btn-clear-draw">Limpar</button>
+          <div class="dsep"></div>
+          <button class="sharebtn" id="btn-save-draft" style="border:1px solid var(--blue);background:var(--bluel);color:var(--blue)">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Salvar
           </button>
-          <button onclick="shareDraftWhatsapp()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:12px;font-family:var(--font);border:1px solid #25D366;border-radius:var(--rs);background:rgba(37,211,102,.12);color:#25D366;cursor:pointer">
+          <button class="sharebtn" id="btn-share-draft" style="border:1px solid #25D366;background:rgba(37,211,102,.12);color:#25D366">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>WhatsApp
           </button>
         </div>
+        <!-- Draw canvas overlay -->
+        <canvas id="draw-canvas" style="display:none;position:absolute;top:0;left:0;cursor:crosshair;touch-action:none"></canvas>
       </div>
+      <!-- Request panel -->
       <div class="req-panel" id="req-panel">
         <div class="rph">📋 Pedido de revisão</div>
-        <div class="rp-scroll">
-          <div class="rp-field"><label>Snapshot do apontamento</label>
-            <img id="rp-snap" class="rp-img" alt="Apontamento">
-            <p id="rp-no-snap" style="font-size:12px;color:var(--t3)">Nenhuma anotação. Use "Anotar" para marcar o PDF.</p>
+        <div class="rpscroll">
+          <div class="rp-field">
+            <label>Prioridade</label>
+            <select id="rp-prio"><option value="normal">● Normal</option><option value="urgente">🔴 Urgente</option><option value="baixa">⬇ Baixa</option></select>
           </div>
-          <div class="rp-field"><label>Prioridade</label>
-            <select id="rp-prio"><option value="normal">Normal</option><option value="urgente">Urgente</option><option value="baixa">Baixa</option></select>
-          </div>
-          <div class="rp-field"><label>Descrição do problema / solicitação</label>
+          <div class="rp-field">
+            <label>Descrição do problema</label>
             <textarea id="rp-desc" placeholder="Descreva o que precisa ser revisado..."></textarea>
+          </div>
+          <div class="rp-field">
+            <label>Capturar tela para anotar (opcional)</label>
+            <button class="btn-send" id="btn-capture" style="background:var(--ambl);color:var(--amber);border:1px solid var(--amber)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Capturar tela e anotar
+            </button>
+            <div id="rp-canvas-wrap" style="display:none;margin-top:8px">
+              <canvas id="rp-canvas" style="width:100%;border-radius:var(--rs);border:1px solid var(--brd);cursor:crosshair;touch-action:none"></canvas>
+              <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center">
+                <div class="cdot sel" style="background:#EF4444;width:18px;height:18px" data-c="#EF4444"></div>
+                <div class="cdot" style="background:#F97316;width:18px;height:18px" data-c="#F97316"></div>
+                <div class="cdot" style="background:#FACC15;width:18px;height:18px" data-c="#FACC15"></div>
+                <div class="cdot" style="background:#4ADE80;width:18px;height:18px" data-c="#4ADE80"></div>
+                <div class="cdot" style="background:#60A5FA;width:18px;height:18px" data-c="#60A5FA"></div>
+                <div class="dsep"></div>
+                <button class="szbtn sel" data-s="3">P</button>
+                <button class="szbtn" data-s="6">M</button>
+                <button class="szbtn" data-s="12">G</button>
+                <div class="dsep"></div>
+                <button class="clrbtn" id="btn-clear-rp">Limpar</button>
+                <button class="clrbtn" id="btn-recapture" style="margin-left:auto">Recapturar</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="rp-actions">
-          <button class="btn-submit" id="btn-submit-req" onclick="submitRequest()">Enviar pedido de revisão</button>
-          <button class="btn-cancel-req" onclick="toggleRequest()">Cancelar</button>
+          <button class="btn-send" id="btn-send-req">Enviar pedido de revisão</button>
+          <button class="btn-cancel" id="btn-cancel-req">Cancelar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
-  <img id="lb-img" src="" alt="">
+<!-- DRAWER -->
+<div class="drw-ov" id="drw-ov"></div>
+<div class="drw" id="drw">
+  <div class="drw-hdr">
+    <div class="drw-title" id="drw-title">Detalhes da revisão</div>
+    <button class="drw-close" id="drw-close">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drw-body">
+    <div class="drw-sec"><label>Projeto</label><p id="drw-nome">—</p><p id="drw-prancha" style="font-size:11px;color:var(--t3);font-family:var(--mono)"></p></div>
+    <div class="drw-sec"><label>Solicitado por</label><p id="drw-autor">—</p></div>
+    <div class="drw-sec"><label>Descrição</label><p id="drw-desc">—</p></div>
+    <div class="drw-sec" id="drw-snap-wrap" style="display:none"><label>Apontamento</label><img id="drw-snap" class="drw-snap" src="" alt="" ></div>
+    <div class="drw-sec"><label>Coluna</label>
+      <select id="drw-col">
+        <option value="solicitado">📬 Revisão solicitada</option>
+        <option value="andamento-interno">🔧 Andamento interno</option>
+        <option value="andamento-externo">🏗 Andamento externo</option>
+        <option value="concluido">✅ Revisão concluída</option>
+      </select>
+    </div>
+    <div class="drw-sec"><label>Prioridade</label>
+      <select id="drw-prio"><option value="normal">● Normal</option><option value="urgente">🔴 Urgente</option><option value="baixa">⬇ Baixa</option></select>
+    </div>
+    <div class="drw-sec"><label>Como foi resolvido</label><textarea id="drw-resolve" placeholder="Descreva o que foi feito..."></textarea></div>
+    <div class="drw-sec"><label>Revisão gerada (ex: R03)</label><input type="text" id="drw-rev" placeholder="Ex: R03"></div>
+  </div>
+  <div class="drw-foot">
+    <button class="btn-save-drw" id="btn-save-drw">Salvar alterações</button>
+    <button class="btn-del-drw" id="btn-del-drw">Excluir</button>
+  </div>
 </div>
 
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
-  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc,
-  deleteDoc, query, where, orderBy, limit, serverTimestamp, onSnapshot, Timestamp }
-  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+<div class="lightbox" id="lightbox"><img id="lb-img" src="" alt=""></div>
 
-const FB = {
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc,
+  deleteDoc, query, orderBy, where, serverTimestamp, onSnapshot, Timestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const FB_CFG = {
   apiKey:"AIzaSyBYqHf8bHbD8ElREv3TmvhPcCI3xZAuxiM",
   authDomain:"zabaleta-tower.firebaseapp.com",
   projectId:"zabaleta-tower",
@@ -642,223 +532,180 @@ const FB = {
   messagingSenderId:"431466789862",
   appId:"1:431466789862:web:2aedf25870c1d9c1563427"
 };
-const app  = initializeApp(FB);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-const $    = id => document.getElementById(id);
+const fbApp = initializeApp(FB_CFG);
+const auth  = getAuth(fbApp);
+const db    = getFirestore(fbApp);
 
-// ── LOAD SHEET DATA FROM GOOGLE SHEETS ──
-  async function loadSheetData(){
-    const SHEET_ID  = '1vZCh6BtNUESBx5PgJ2RuFTsmm2duAvOPDCOIUo75QI4';
-    const SHEET_ABA = 'LISTA MESTRA';
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=0&sheet=${encodeURIComponent(SHEET_ABA)}`;
-    try {
-      const res  = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.replace(/^[^\{]+/, '').replace(/[^\}]+$/, ''));
-      const raw  = json.table.rows;
-      const cv   = cell => (cell && cell.v != null) ? String(cell.v).trim() : '';
-      return raw.slice(4)
-        .map(r => {
-          const c = r.c || [];
-          return {
-            status:  cv(c[0]),
-            disc:    cv(c[2]),
-            prancha: cv(c[3]),
-            rev:     cv(c[4]),
-            tipo:    cv(c[5]),
-            nome:    cv(c[6]),
-            desc:    cv(c[7]),
-            lpdf:    cv(c[8]),
-            led:     cv(c[9]),
-          };
-        })
-        .filter(r => r.status !== 'DESATUALIZADO' && (r.status || r.nome || r.disc));
-    } catch(e) {
-      console.error('Erro ao carregar planilha:', e);
-      return [];
-    }
-  }
+// ── HELPERS ──
+const ge = id => document.getElementById(id);
+const DATA = [{"status": "ATUALIZADO", "disc": "ARQUITETÔNICO", "prancha": "002.001 A 002.015", "rev": "R02", "tipo": "LEGAL/EXECUTIVO", "nome": "DJ-789-0001 - R02 - D-JOAQUIM, 789 - ZABALETA TOWER DOM JOAQUIM", "desc": "PROJETO ARQUITETÔNICO LEGAL E EXECUTIVO", "lpdf": "https://drive.google.com/open?id=1sk3_eAH5h_PJsHBfqJ7yutah4cS-EiLX&usp=drive_fs", "led": "https://drive.google.com/open?id=1KBZz_56HURNWmkYUEBXFOLQpyHYjqoR1&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "PASAGISMO", "prancha": "002.016.", "rev": "R00", "tipo": "LEGAL/EXECUTIVO", "nome": "DJ 785 - DOM JOAQUIM 785 - PROJETO PAISAGISTICO", "desc": "PROJETO PASAGISMO LEGAL E EXECUTIVO", "lpdf": "https://drive.google.com/open?id=1vlOfyf82s88gj_L4s2XkHwiaEAjxOh-l&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "TOPOGRÁFICO", "prancha": "", "rev": "R00", "tipo": "LEGAL/EXECUTIVO", "nome": "LEVANTAMENTO PLANIALTIMETRICO - LEVANTAMENTO TERRENO", "desc": "LEVANTAMENTO PLANIALTIMETRICO TERRENO", "lpdf": "https://drive.google.com/open?id=1AkXksMNCM0p-zz5j8Im14ipqYQFa3Xp5&usp=drive_fs", "led": "https://drive.google.com/open?id=1B6ykp7fodSlcDYYECXNF8zgfIKqygdyl&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "TOPOGRÁFICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "LEVANTAMENTO PLANIALTIMETRICO - LOCAÇÃO OBRA", "desc": "LOCAÇÃO PILARES OBRA", "lpdf": "", "led": "https://drive.google.com/open?id=1VYo8axOUYfsU7Kw6eazAUPt1PmWxD1Zg&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "TERRAPLANAGEM", "prancha": "002-002", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO REFORÇO TERRENO", "desc": "TERRAPLANAGEM - REFORÇO TERRENO", "lpdf": "https://drive.google.com/open?id=1TZUZpr42ZnPaqP_B9wX5Yze09fyZSOga&usp=drive_fs", "led": "https://drive.google.com/open?id=1iCNrNIpUkW7uPOE2QKbQ2LwrnLdQbZdV&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "FUNDAÇÃO PROFUNDA", "prancha": "HC 0902.28", "rev": "R02", "tipo": "LEGAL/EXECUTIVO", "nome": "PROJETO DE FUNDAÇÃO", "desc": "PROJETO FUNDAÇÃO TIPO HÉLICE", "lpdf": "https://drive.google.com/open?id=1RL__wRWK6-xwg8ojBcq_l_h4ACuqDh1A&usp=drive_fs", "led": "https://drive.google.com/open?id=1BGdo1NtcLNmdCEzY4HzAiABZB7KsBOxU&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "DETALHES", "prancha": "1000-001", "rev": "R01", "tipo": "EXECUTIVO", "nome": "PROJETO GABARITO TÉRREO", "desc": "PROJETO EXECUÇÃO GABARITO NÍVEL TÉRREO", "lpdf": "https://drive.google.com/open?id=1QBILY69IdF6_eB8eUuumSsdbGMRFjtoN&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "IFC", "rev": "R07", "tipo": "EXECUTIVO", "nome": "PROJETO IFC ESTRUTURA", "desc": "PROJETO IFC ESTRUTURA", "lpdf": "", "led": "https://drive.google.com/open?id=14JV3RIdyVhdcCe32AK9QLPPuVXxLqQbi&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-001", "rev": "R03", "tipo": "EXECUTIVO", "nome": "PROJETO GABARITO (ESTRUTURAL)", "desc": "GABARITO", "lpdf": "ZABALETA-ZABALETA TOWER-EST-EX-001-GERA-GAB-R03.PDF", "led": "https://drive.google.com/open?id=13_8pyM04BalYzwVSgnYJf49Pk--29cfC&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-002", "rev": "R02", "tipo": "EXECUTIVO", "nome": "PROJETO CARGAS (ESTRUTURAL)", "desc": "CARGAS", "lpdf": "https://drive.google.com/open?id=1fEGXaaPbC8BFWnZYTQC-QGHkMJK00LvB&usp=drive_fs", "led": "https://drive.google.com/open?id=15JmpehsVpC3XA4jGqzaSg60JP7194HSX&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-011", "rev": "R01", "tipo": "EXECUTIVO", "nome": "GEOMETRIA BLOCOS DE FUNDAÇÃO", "desc": "GEOMETRIA BLOCOS DE FUNDAÇÃO", "lpdf": "https://drive.google.com/open?id=1zxrBZjrnsV_97qf32poRRRyxGHWews7L&usp=drive_fs", "led": "https://drive.google.com/open?id=1wi4aVCH-aZzAwo0sF0rDCFiZohKuvahH&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-012", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 1", "desc": "ARMADURA BLOCOS 1", "lpdf": "https://drive.google.com/open?id=18boblALRh7moxjaQJio0qdu6u2Ez3s1b&usp=drive_fs", "led": "https://drive.google.com/open?id=1oKdqsp8AQo-DpZtudjedCgou6Hnla9wA&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-013", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 2", "desc": "ARMADURA BLOCOS 2", "lpdf": "https://drive.google.com/open?id=1CLM9_7W3u9aPNzXm6DvS3WBjKslSR3ka&usp=drive_fs", "led": "https://drive.google.com/open?id=1FRP3nzittgWYzCgPj7EE6FVUp-narh-q&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-014", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 3", "desc": "ARMADURA BLOCOS 3", "lpdf": "https://drive.google.com/open?id=188qxszrO_1Tl7Aq9-qIOtT8fiMBRALIv&usp=drive_fs", "led": "https://drive.google.com/open?id=13Y8uPMy9lrawJDzMi5GcXVEqdIO0tKqU&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-015", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 4", "desc": "ARMADURA BLOCOS 4", "lpdf": "https://drive.google.com/open?id=1f5DCNnKLdPmEr44stWnBCYHsueJXq_WT&usp=drive_fs", "led": "https://drive.google.com/open?id=1bKttILX7qNEqNZOkXJ4ez8QJrpBtcbhi&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-016", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 5", "desc": "ARMADURA BLOCOS 5", "lpdf": "https://drive.google.com/open?id=12BuyqZ9vK815tN8qJO4Qwmm4WrpwFXpw&usp=drive_fs", "led": "https://drive.google.com/open?id=1vQ_HyPbPMRcyOW7xgFnN2xDiHyTz8MeB&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-017", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 6", "desc": "ARMADURA BLOCOS 6", "lpdf": "https://drive.google.com/open?id=15W7xApxS57tH8EHhQTMp10AKbFuQdZSo&usp=drive_fs", "led": "https://drive.google.com/open?id=118nWjTX0MuPkWs8GXxMkHeAZ7LrIY7ta&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-018", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA BLOCOS 7", "desc": "ARMADURA BLOCOS 7", "lpdf": "https://drive.google.com/open?id=1EfuUCZUic0Dy3Nvf8p932y0y-ZydNxVv&usp=drive_fs", "led": "https://drive.google.com/open?id=1Pu-m0jwAG-F7nn-rFxIqbGsFj2Cnsovi&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-101", "rev": "R03", "tipo": "EXECUTIVO", "nome": "GEOMETRIA VIGAS DE FUNDAÇÃO", "desc": "GEOMETRIA VIGAS DE FUNDAÇÃO", "lpdf": "ZABALETA-ZABALETA TOWER-EST-EX-101-SUBS-GEO-R03.PDF", "led": "https://drive.google.com/file/d/1fJrexcHBn-rm31kT7_yoV1lv9X5SyrfG/view?usp=drive_link"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-201", "rev": "R02", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS DE FUNDAÇÃO 1", "desc": "ARMADURA VIGAS DE FUNDAÇÃO 1", "lpdf": "ZABALETA-ZABALETA   -EST-EX-201-SUBS-VIG-R02.PDF", "led": "https://drive.google.com/file/d/1SZ2QbY2vlUFnZsZ-1Joi0QivT1u5QIZQ/view?usp=drive_link"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-202", "rev": "R03", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS DE FUNDAÇÃO 2", "desc": "ARMADURA VIGAS DE FUNDAÇÃO 2", "lpdf": "https://drive.google.com/file/d/1SBLf8-RdmVASIW7d4M8a1XaLGohoMtqH/view?usp=drive_link", "led": "https://drive.google.com/file/d/1he5_58po1D9rR04s_gWBm8cODwVf2rW7/view?usp=drive_link"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-203", "rev": "R02", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS DE FUNDAÇÃO 3", "desc": "ARMADURA VIGAS DE FUNDAÇÃO 3", "lpdf": "https://drive.google.com/file/d/1vDRMSNnxQGMDUCIvV0932poUA_B00ZnY/view?usp=drive_link", "led": "https://drive.google.com/file/d/1iPk4nza_hWAAM0TqEgcF54pbBhwWk4DW/view?usp=drive_link"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-204", "rev": "R00", "tipo": "EXECUTIVO", "nome": "DETALHAMENTO ARMADURA CONTENÇÕES 1", "desc": "DETALHAMENTO ARMADURA CONTENÇÕES 1", "lpdf": "https://drive.google.com/open?id=16ReEdks2VFQGm7jo2sHODV8eNu_jl1Xk&usp=drive_fs", "led": "https://drive.google.com/open?id=1wjx1mGUCI8JpFNU01J-BPYAcZniMd-U8&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-205", "rev": "R00", "tipo": "EXECUTIVO", "nome": "DETALHAMENTO ARMADURA CONTENÇÕES 2", "desc": "DETALHAMENTO ARMADURA CONTENÇÕES 2", "lpdf": "https://drive.google.com/open?id=1n5-8I-4EmKK2_wi5p-uGW3r7xx1HsPya&usp=drive_fs", "led": "https://drive.google.com/open?id=1-vGouGvJI_e2AV0piz39PmtMiUv7AoP4&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-301", "rev": "R00", "tipo": "EXECUTIVO", "nome": "DETALHAMENTO ARMADURA LAJE SUBSOLO", "desc": "DETALHAMENTO ARMADURA LAJE SUBSOLO", "lpdf": "https://drive.google.com/open?id=10El8xcmshcWzSZI7ph4HzXCWPZv2yO_e&usp=drive_fs", "led": "https://drive.google.com/open?id=1iG3_7sseECdYNcxgjuokD1s_2soKhsRS&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-401", "rev": "R00", "tipo": "EXECUTIVO", "nome": "DETALHAMENTO ESCADA DO SUBSOLO AO TÉRREO", "desc": "DETALHAMENTO ESCADA DO SUBSOLO AO TÉRREO", "lpdf": "https://drive.google.com/open?id=1SJynRy-m0RgfLKs2VMMyRvoKssTHTZq1&usp=drive_fs", "led": "https://drive.google.com/open?id=1mRm_ALSOY3pBEg2zpqHBpwOWqP9K68YB&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-051", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 1", "desc": "ARMADURA PILARES 1", "lpdf": "https://drive.google.com/open?id=1ivguGeBL1TT0j5nABxaDPl3SmO38mLeM&usp=drive_fs", "led": "https://drive.google.com/open?id=16VCsudWcgeGF_YGQFhz-rtLgecouO-tU&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-052", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 2", "desc": "ARMADURA PILARES 2", "lpdf": "https://drive.google.com/open?id=1q2noKms6XnavpKX-9FDJJT0seWuk4WZy&usp=drive_fs", "led": "https://drive.google.com/open?id=1UTJ6rRgOtDGnDOtn-6RvSTNZF_-1fj69&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-053", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 3", "desc": "ARMADURA PILARES 3", "lpdf": "https://drive.google.com/open?id=1xWZdkXE0NKE9E_-YlMTIRMY1TiaTtHzF&usp=drive_fs", "led": "https://drive.google.com/open?id=1eQYLlbPG2AG85CKNxnj1vxRYaUhJddy5&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-054", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 4", "desc": "ARMADURA PILARES 4", "lpdf": "https://drive.google.com/open?id=1sM-_9NP3ZyP4r37C4XjtoqvWFYO2mEgs&usp=drive_fs", "led": "https://drive.google.com/open?id=1R6Jfo29GBcgLxbaOfYto6WYx_CCkzMwG&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-055", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 5", "desc": "ARMADURA PILARES 5", "lpdf": "https://drive.google.com/open?id=1yVd8qWeEAu7mWe6R1qp1xCEzqCmnKYaD&usp=drive_fs", "led": "https://drive.google.com/open?id=1XKGbXTvfcjh6JC_AKir9CkOxHqrpPWbf&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-056", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 6", "desc": "ARMADURA PILARES 6", "lpdf": "https://drive.google.com/open?id=15ujV_GUzAjt_MrJu6OUR6FzCYSpz2uMx&usp=drive_fs", "led": "https://drive.google.com/open?id=1JjTIdNdRJ-U6UxBiaeblRqr6Axcv-B0p&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-057", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 7", "desc": "ARMADURA PILARES 7", "lpdf": "https://drive.google.com/open?id=1v-fiNz7bbmbv11XiG80jaILyXZci_Vb_&usp=drive_fs", "led": "https://drive.google.com/open?id=19HjzOJAchus9Ri-FXWZHuOIMCpa_2Gf-&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-058", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 8", "desc": "ARMADURA PILARES 8", "lpdf": "https://drive.google.com/open?id=1p3JtDUsR0LlzPxeU9hMzPfEycgvE2wZw&usp=drive_fs", "led": "https://drive.google.com/open?id=1aHiggUJQ7lNSZ5-rcoFywy_Lb3gNQt6t&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-059", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 9", "desc": "ARMADURA PILARES 9", "lpdf": "https://drive.google.com/open?id=15KuiNs0ni6_ZfMAsiRq2XgKNrPu04vKR&usp=drive_fs", "led": "https://drive.google.com/open?id=10VSxcXrIft4XLIGwEMfBBh-hH_B0QVa_&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-060", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 10", "desc": "ARMADURA PILARES 10", "lpdf": "https://drive.google.com/open?id=15G7PStzHRdM2iQZsN0ldSo6-tkAlOtYw&usp=drive_fs", "led": "https://drive.google.com/open?id=1ObcPPljwaXKAcMhqHwv18PnmuXVThr6x&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-061", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 11", "desc": "ARMADURA PILARES 11", "lpdf": "https://drive.google.com/open?id=1r2z8C4g0hf98HRvmOdvDa4CdnAUIrDqG&usp=drive_fs", "led": "https://drive.google.com/open?id=1c7TcPAtqgPPDtZ5S7N8g_pFVqvqWugzL&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-062", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA PILARES 12", "desc": "ARMADURA PILARES 12", "lpdf": "https://drive.google.com/open?id=1_uYg2OuqL-d4n3qqMfSgyratqDOY3vpc&usp=drive_fs", "led": "https://drive.google.com/open?id=1AnwhNKen7kuMijx1xw1vfBC-bo5d9ish&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-102", "rev": "R04", "tipo": "EXECUTIVO", "nome": "GEOMETRIA TERREO", "desc": "GEOMETRIA TERREO", "lpdf": "ZABALETA-ZABALETA TOWER-EST-EX-102-TERR-GEO-R04.PDF", "led": "https://drive.google.com/open?id=11qn2nCGZqNNeHp5JIX-j6SzoJe9yMofz&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-206", "rev": "R02", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 1", "desc": "ARMADURA VIGAS TERREO 1", "lpdf": "https://drive.google.com/open?id=1K0nJvpSgDoWeSOTNyphMfuSyIgY8Rt9T&usp=drive_fs", "led": "https://drive.google.com/open?id=132WALmWqWgv-g2fHw9vBzQw_qeVNen7z&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-207", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 2", "desc": "ARMADURA VIGAS TERREO 2", "lpdf": "https://drive.google.com/open?id=1EB3xntGrLDVi62zliUrNYBJQAqP1NhPQ&usp=drive_fs", "led": "https://drive.google.com/open?id=1m68DRR-n6BTDyOSMYW9Dkldwc5UBAQJM&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-208", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 3", "desc": "ARMADURA VIGAS TERREO 3", "lpdf": "https://drive.google.com/open?id=15zdvpgGxGkJ7wtuXrN_bbK3cwaU50dIq&usp=drive_fs", "led": "https://drive.google.com/open?id=1pYs9vIp8hr3QVfW4juBs2fOp8s8SvDzb&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-209", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 4", "desc": "ARMADURA VIGAS TERREO 4", "lpdf": "ZABALETA-ZABALETA TOWER-EST-EX-209-TERR-VIG-R01.PDF", "led": "https://drive.google.com/open?id=1KFzIUo3-FTLBdVc36h_sMZGOZg0-t2MJ&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-210", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 5", "desc": "ARMADURA VIGAS TERREO 5", "lpdf": "https://drive.google.com/open?id=1PHEDHB-iylM8Z-tjbVm_HZsi0tI3PMCK&usp=drive_fs", "led": "https://drive.google.com/open?id=1t7SX3TPjDx16rKaeCImLIWdTeLWTtgQS&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-211", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 6", "desc": "ARMADURA VIGAS TERREO 6", "lpdf": "https://drive.google.com/open?id=1V-yyn6Ugivkz-KA3fNqxB8oQ8XLCrw-W&usp=drive_fs", "led": "https://drive.google.com/open?id=1kYG9C2QhTuEbwjZT2owuqYgoEzqrrnSz&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-212", "rev": "R01", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 7", "desc": "ARMADURA VIGAS TERREO 7", "lpdf": "https://drive.google.com/open?id=1k9amDD4PnIdsLxOMUV0C9WPZ4TZCGnyI&usp=drive_fs", "led": "https://drive.google.com/open?id=1uPMXVN9qqP-w-XwkMvKN83eo-MZYDrBB&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-213", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 8", "desc": "ARMADURA VIGAS TERREO 8", "lpdf": "https://drive.google.com/open?id=1WO854nWM8aogH9vsO-jdrhQl0907DgzU&usp=drive_fs", "led": "https://drive.google.com/open?id=11_L06CmdFa6ZFwrUwUz4asylmnin0Wba&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-214", "rev": "R03", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 9", "desc": "ARMADURA VIGAS TERREO 9", "lpdf": "https://drive.google.com/open?id=19oTvtn482A9kW15sSZ58lVBr4mnfYXZN&usp=drive_fs", "led": "https://drive.google.com/open?id=1fNEz5QJhtnTOcX1q3M7B8xDLKEfegh84&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-215", "rev": "R02", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS TERREO 10", "desc": "ARMADURA VIGAS TERREO 10", "lpdf": "https://drive.google.com/open?id=10YFM6Tx-f_En2NkxaL7H1hDBOQ96PsiY&usp=drive_fs", "led": "https://drive.google.com/open?id=1PmUJbACbMLQCJu6yWP_ebAI-XA0r23PB&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-302", "rev": "R02", "tipo": "EXECUTIVO", "nome": "ARMADURA LAJES TERREO 1", "desc": "ARMADURA LAJES TERREO 1", "lpdf": "https://drive.google.com/open?id=1npq3--iD1k6wjQUlqDMCrG-pOA5nf28m&usp=drive_fs", "led": "https://drive.google.com/open?id=14XfF9sLxLPmnJPxYdGf3QYx7rhwRySNG&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-303", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA LAJES TERREO 2", "desc": "ARMADURA LAJES TERREO 2", "lpdf": "https://drive.google.com/open?id=1CdApXDOJ2pfH1qNLhXkdc4kbWNptAZ09&usp=drive_fs", "led": "https://drive.google.com/open?id=1YqGq5Ypn1WfLv2Ku4MvP5QdggNGJVkhw&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-103", "rev": "R00", "tipo": "EXECUTIVO", "nome": "GEOMETRIA 2º PVTO", "desc": "GEOMETRIA 2º PVTO", "lpdf": "https://drive.google.com/open?id=1plGMGDKgzMC9JbrlDFiMC1Buoqj3wsw1&usp=drive_fs", "led": "https://drive.google.com/open?id=1oLT2WXGBnCEIGDLyknQnXeyePYdRPFRT&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-216", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 1", "desc": "ARMADURA VIGAS 200 - 1", "lpdf": "https://drive.google.com/open?id=1kDoFWB8bmmbqyZgrBz4yiZeLjz2V0U3X&usp=drive_fs", "led": "https://drive.google.com/open?id=1N250jJ1I2gD1Ohje7BJE_dAkU0QSqi41&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-217", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 2", "desc": "ARMADURA VIGAS 200 - 2", "lpdf": "https://drive.google.com/open?id=1rYgiqsXBfglQatXJiPKKWBfG1J6UAw6D&usp=drive_fs", "led": "https://drive.google.com/open?id=11o3BXxvfLeaZ-lrcofLNp3b-UUK94TP2&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-218", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 3", "desc": "ARMADURA VIGAS 200 - 3", "lpdf": "https://drive.google.com/open?id=1TS7NqAXctaxzrt2czK-tpeZ4_ZUX0nKt&usp=drive_fs", "led": "https://drive.google.com/open?id=1EWVl7V6NepMPNfpKHfYbicHR1H1N5j5K&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-219", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 4", "desc": "ARMADURA VIGAS 200 - 4", "lpdf": "https://drive.google.com/open?id=1kXdSNCbOOoV0p6seRL0bvmXTsVsRnRVM&usp=drive_fs", "led": "https://drive.google.com/open?id=1Lly7zXo7-OBgFO-67ZV9b1lN1i1m4FZP&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-220", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 5", "desc": "ARMADURA VIGAS 200 - 5", "lpdf": "https://drive.google.com/open?id=1dzVqU5zy0C1Fj-NvacL1CG2cEVe_7h41&usp=drive_fs", "led": "https://drive.google.com/open?id=1dP82A_dUyGiuJFGGdME11jMxFTlB9Qt3&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-221", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 6", "desc": "ARMADURA VIGAS 200 - 6", "lpdf": "https://drive.google.com/open?id=1A4qZ8f-RDp4r2X3F1pK-CYRNL3p8p8PL&usp=drive_fs", "led": "https://drive.google.com/open?id=1FxLobTvEjGkgF9mOtnxZIHF8Yr9uDLVy&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-222", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 7", "desc": "ARMADURA VIGAS 200 - 7", "lpdf": "https://drive.google.com/open?id=1vk1puVjzXKJVKj4f_yTl9-tatwCxK6K6&usp=drive_fs", "led": "https://drive.google.com/open?id=1qcFBo2UiTUa1ZSlBv-m4FoO6T5zkHVeS&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-223", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 8", "desc": "ARMADURA VIGAS 200 - 8", "lpdf": "https://drive.google.com/open?id=1Tt3NjFtYAgeq-cwx2WEz2caCt-XZTO4G&usp=drive_fs", "led": "https://drive.google.com/open?id=1Bhg1h5f82jeLvUs7dVcKcypkC5rA7quH&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-224", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA VIGAS 200 - 9", "desc": "ARMADURA VIGAS 200 - 9", "lpdf": "https://drive.google.com/open?id=1sC-Pn2AzuhZ_xB5diu9cXtdn5be5ewVQ&usp=drive_fs", "led": "https://drive.google.com/open?id=1zj7meaQxsG_Xz2WvgyV8W43hJHssH-Ea&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-304", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA LAJES 200 - 1", "desc": "ARMADURA LAJES 200 - 1", "lpdf": "https://drive.google.com/open?id=1unL64tDdxrTuqPvKefG-SpxSSQa-LerU&usp=drive_fs", "led": "https://drive.google.com/open?id=1doaZSyQvNUjrEVnfH6ltP4FXiDI8wyKf&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-305", "rev": "R00", "tipo": "EXECUTIVO", "nome": "ARMADURA LAJES 200 - 2", "desc": "ARMADURA LAJES 200 - 2", "lpdf": "https://drive.google.com/open?id=1Zhn4ls43rn3vXzuARVZPUKkCyhyfwvfc&usp=drive_fs", "led": "https://drive.google.com/open?id=1ruBrYa3dpAybdzEO6Zr_nVPsDReqrksh&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-402", "rev": "R00", "tipo": "EXECUTIVO", "nome": "GEOMETRIA ARMADURA ESCADA TERREO AO 200 - 1", "desc": "GEOMETRIA ARMADURA ESCADA TERREO AO 200 - 1", "lpdf": "https://drive.google.com/open?id=1zLnz3aNqG1eoq2rYO00TaagW5Myo5y3q&usp=drive_fs", "led": "https://drive.google.com/open?id=1UA_v0Q2tsU9Kx3DVZIZ64ep6me2hmYwD&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTRUTURAL", "prancha": "EX-403", "rev": "R00", "tipo": "EXECUTIVO", "nome": "GEOMETRIA ARMADURA ESCADA TERREO AO 200 - 2", "desc": "GEOMETRIA ARMADURA ESCADA TERREO AO 200 - 2", "lpdf": "https://drive.google.com/open?id=1svLbsX1EvIiccCcV3GvJzZDhqDl5Z40L&usp=drive_fs", "led": "https://drive.google.com/open?id=1ul_aS9Jw7uTtj6IuUnjXzQ4lbEhV-efe&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTUDO ESTRUTURAL", "prancha": "", "rev": "R00", "tipo": "PRÉ-GEOMETRIA", "nome": "", "desc": "PRÉ-GEOMETRIA 3º PVTO", "lpdf": "https://drive.google.com/open?id=1Y3hXuxpwXkfTqbP3p_dYTO9oUFHziWe3&usp=drive_fs", "led": "https://drive.google.com/open?id=1bR0rO_FhYgrkIx6kpZ97DkUChZS8TA95&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTUDO ESTRUTURAL", "prancha": "", "rev": "R00", "tipo": "PRÉ-GEOMETRIA", "nome": "", "desc": "PRÉ-GEOMETRIA 4º PVTO", "lpdf": "https://drive.google.com/open?id=13WpzdWagtu3zgVFKFl4dKlsBtxk-oEj_&usp=drive_fs", "led": "https://drive.google.com/open?id=1uhHsVDwJF9nE9yd_rm2SablUGCktv-Vf&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTUDO ESTRUTURAL", "prancha": "", "rev": "R00", "tipo": "PRÉ-GEOMETRIA", "nome": "", "desc": "PRÉ-GEOMETRIA 5º PVTO", "lpdf": "https://drive.google.com/open?id=13FPaaopIOEdYoNp5d2JQhWbHLo2LaQdp&usp=drive_fs", "led": "https://drive.google.com/open?id=1BsDODCV3AtdHG6wJ4QUSDPMHb74WrL7Q&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTUDO ESTRUTURAL", "prancha": "", "rev": "R00", "tipo": "PRÉ-GEOMETRIA", "nome": "", "desc": "PRÉ-GEOMETRIA PVTO TIPO", "lpdf": "https://drive.google.com/open?id=18o81pEf8eOgzfZ7nwlMTHsTtg4bL5eyI&usp=drive_fs", "led": "https://drive.google.com/open?id=1B_2SrFSbNuFAJF9Kz0aDuZblDWmiQwHF&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ESTUDO ESTRUTURAL", "prancha": "", "rev": "R00", "tipo": "PRÉ-GEOMETRIA", "nome": "", "desc": "PRÉ-GEOMETRIA PVTO COBERTURA", "lpdf": "https://drive.google.com/open?id=1Zb1TLqDLfJr6QPYDBeRQzEoJxON0wbG1&usp=drive_fs", "led": "https://drive.google.com/open?id=1_iSS-b1XJrDO9WnfFooQCiulB6AsCrzk&usp=drive_fs"}, {"status": "PASSANDO POR REVISÃO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "IFC ELÉTRICA", "desc": "IFC ELÉTRICA", "lpdf": "", "led": "https://drive.google.com/open?id=1RY72xNExFnmq3hLYT7YK6q0VlNjUIP6W&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "LEGAL", "nome": "ENTRADA ENERGIA - MT", "desc": "ENTRADA ENERGIA - MT", "lpdf": "https://drive.google.com/open?id=1zT8aD0Jv4Z85q7J3Ku_xrtsDW80qHi3d&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 01, 02 E 03", "desc": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 01, 02 E 03", "lpdf": "https://drive.google.com/open?id=1I4mS1QPla7qaBDgeM7ngI3Vb-aR-JLBS&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 07, 08 E 12", "desc": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 07, 08 E 12", "lpdf": "https://drive.google.com/open?id=1Folw2xfkA7D35-6nePywzy6dWL8UIL0_&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 16, 17, 18 E WCS CIRC", "desc": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 16, 17, 18 E WCS CIRC", "lpdf": "https://drive.google.com/open?id=1LoEIjY6sexN6TSlhPlScf_GP2xE7nBvS&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "ELÉTRICO", "prancha": "", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 19, 23, 24, 28, 29 E 30", "desc": "PROJETO ELÉTRICO EDIFÍCIO - PLANTA FINAL 19, 23, 24, 28, 29 E 30", "lpdf": "https://drive.google.com/open?id=1p0_8klAyV1pKahA19-6BxWvQ1tIxdeVR&usp=drive_fs", "led": ""}, {"status": "PASSANDO POR REVISÃO", "disc": "ELÉTRICO", "prancha": "", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO LÓGICA EDIFÍCIO", "desc": "PROJETO LÓGICA EDIFÍCIO", "lpdf": "", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "IFC HIDRO", "rev": "", "tipo": "EXECUTIVO", "nome": "IFC HIDRÁULICO", "desc": "IFC PROJETO HIDRAULICO", "lpdf": "", "led": "https://drive.google.com/open?id=1PPB8f5IopOqEvihvjwkca-3m79S3szxZ&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 1/10", "rev": "R00", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO SUBSOLO", "desc": "PROJETO HIDRÁULICO SUBSOLO", "lpdf": "https://drive.google.com/open?id=1AYUgoNubrG5ffL7KOXfJEtaER2mtKCas&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 2/10", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO TÉRREO E 2º PVTO", "desc": "PROJETO HIDRÁULICO TÉRREO E 2º PVTO", "lpdf": "https://drive.google.com/open?id=1EPdYtlCdw1VMSriKsj7U8mh5XnqYCpkg&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 3/10", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO 3º PVTO", "desc": "PROJETO HIDRÁULICO 3º PVTO", "lpdf": "https://drive.google.com/open?id=11N8MJW9iohrI_8c0JrdTOha6VackUJR_&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 4/10", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO 4º PVTO", "desc": "PROJETO HIDRÁULICO 4º PVTO", "lpdf": "https://drive.google.com/open?id=15WNBlIZNL08o4uibQjhWQHiqTqnzSpSb&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 5/10", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO PVTO TIPO", "desc": "PROJETO HIDRÁULICO PVTO TIPO", "lpdf": "https://drive.google.com/open?id=1gR_nxgEqrKInmALSwPO1nuk5jlEzDntV&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 6/10", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO HIDRÁULICO COBERTURA E RESERVATÓRIOS SUPERIORES", "desc": "PROJETO HIDRÁULICO COBERTURA E RESERVATÓRIOS SUPERIORES", "lpdf": "https://drive.google.com/open?id=1Uy5LBr1YnMNWyPr3PMYpwbWQtf4iWf-A&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 7/10", "rev": "", "tipo": "EXECUTIVO", "nome": "DETALHAMENTOS HIDRÁULICA 1", "desc": "DETALHAMENTOS HIDRÁULICA 1", "lpdf": "https://drive.google.com/open?id=1rQx6u8aVo_D5o391xWkixM4sVtbhc1Fd&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 8/10", "rev": "", "tipo": "EXECUTIVO", "nome": "DETALHAMENTOS HIDRÁULICA 2", "desc": "DETALHAMENTOS HIDRÁULICA 2", "lpdf": "https://drive.google.com/open?id=1ik_QGXmLJwLqHGsEd6l5im3SQJkUOUQb&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 9/10", "rev": "", "tipo": "EXECUTIVO", "nome": "DETALHAMENTOS HIDRÁULICA 3", "desc": "DETALHAMENTOS HIDRÁULICA 3", "lpdf": "https://drive.google.com/open?id=1w5ltpSFjeKn23AGdi8nCuXEwm8AXh_WR&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "HIDRÁULICO", "prancha": "HID 10/10", "rev": "", "tipo": "EXECUTIVO", "nome": "ESQUEMA VERTICA HIDRÁULICO", "desc": "ESQUEMA VERTICA HIDRÁULICO", "lpdf": "https://drive.google.com/open?id=1q8LUe_o0jJQNJGfktoE3EmRhig2c0E7g&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "", "rev": "", "tipo": "", "nome": "IFC SANITÁRIO", "desc": "", "lpdf": "", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 1/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO SUBSOLO - PLUVIAL", "desc": "PROJETO SANITÁRIO SUBSOLO - PLUVIAL", "lpdf": "PROJETO SANITÁRIO SUBSOLO - PLUVIAL", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 1.1/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO SUBSOLO - PLUVIAL - DETALHAMENTO", "desc": "PROJETO SANITÁRIO SUBSOLO - PLUVIAL", "lpdf": "https://drive.google.com/open?id=1U7UEfh8xf8nkUfac_62l-_iWfhbv77kV&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 2/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO TÉRREO", "desc": "PROJETO SANITÁRIO TÉRREO", "lpdf": "https://drive.google.com/open?id=1nnmdreuc7c4Edr297p31BIW-yMigtIk_&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 3/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO 2º PVTO", "desc": "PROJETO SANITÁRIO 2º PVTO", "lpdf": "https://drive.google.com/open?id=17UQ_qxaqWPxbjcvbjdw_Ys8rOiuHNpo6&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 4/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO 3º PVTO", "desc": "PROJETO SANITÁRIO 3º PVTO", "lpdf": "https://drive.google.com/open?id=1S5VyTfjsznWCNdUYN4-f3fLp9OjXbZdN&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 5/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO 4º PVTO", "desc": "PROJETO SANITÁRIO 4º PVTO", "lpdf": "https://drive.google.com/open?id=1PeBchUmT66MJd1ZTIZ02uHSqgyKO7jI9&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 6/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO PVTO TIPO", "desc": "PROJETO SANITÁRIO PVTO TIPO", "lpdf": "https://drive.google.com/open?id=1PUfxf8nEkHBPWTTRvTMy6bO_SnGecxa2&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 7/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO COBERTURA", "desc": "PROJETO SANITÁRIO COBERTURA", "lpdf": "https://drive.google.com/open?id=1B6dE0OaxjM6Hq_1r3YrqltROxxRthL05&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 8/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO DETALHAMENTOS 1", "desc": "PROJETO SANITÁRIO DETALHAMENTOS 1", "lpdf": "https://drive.google.com/open?id=1OScrKD7o7HRZI8-Ne0fQUFmwbQG7XS-G&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "SANITÁRIO", "prancha": "SAN 9/9", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO SANITÁRIO DETALHAMENTOS 2", "desc": "PROJETO SANITÁRIO DETALHAMENTOS 2", "lpdf": "https://drive.google.com/open?id=16pTf5Ix2NK_jzWI5IYFs2zAmSXxZ66q6&usp=drive_fs", "led": ""}, {"status": "ATUALIZADO", "disc": "PPCI", "prancha": "", "rev": "", "tipo": "", "nome": "IFC PPCI", "desc": "", "lpdf": "", "led": ""}, {"status": "ATUALIZADO", "disc": "PPCI", "prancha": "", "rev": "", "tipo": "LEGAL", "nome": "PROJETO PPCI APROVADO", "desc": "PROJETO PPCI APROVADO", "lpdf": "https://drive.google.com/open?id=1w9-NiSqUKslGvbN_MCm1aBA0I0wfjKhw&usp=drive_fs", "led": ""}, {"status": "PASSANDO POR REVISÃO", "disc": "PPCI", "prancha": "", "rev": "", "tipo": "EXECUTIVO", "nome": "PROJETO EXECUTIVO PPCI", "desc": "PROJETO EXECUTIVO PPCI", "lpdf": "", "led": ""}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA IFC", "rev": "", "tipo": "EXECUTIVO", "nome": "IFC SPDA", "desc": "IFC SPDA", "lpdf": "", "led": "https://drive.google.com/open?id=1FkG-XXW0lL9RZWEmmwOcq-I9_XH8hvoo&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 01/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA SUBSOLO - 1", "desc": "SPDA SUBSOLO - 1", "lpdf": "https://drive.google.com/open?id=1R32RjRu2hUt_J52VjOA52b3lknqhpOWG&usp=drive_fs", "led": "https://drive.google.com/open?id=1cLqv44wJM1g9pCdR4P-tpewjm3TsfGPk&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 02/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA SUBSOLO - 2", "desc": "SPDA SUBSOLO - 2", "lpdf": "https://drive.google.com/open?id=1ho-nfKtSE8hzdVDgDLpIQacKXlhgbuFk&usp=drive_fs", "led": "https://drive.google.com/open?id=1Ws34eweyhdRzRSge-dgtVEgjIrZQqBQz&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 03/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA TÉRREO", "desc": "SPDA TÉRREO", "lpdf": "https://drive.google.com/open?id=1LnP3HWLBkbVqJyWNtjNU19t0h6bMMYHf&usp=drive_fs", "led": "https://drive.google.com/open?id=1fPDWE9f3KQjrvlVlSOk95fXZh4sSRIFg&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 04/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA TÉRREO", "desc": "SPDA TÉRREO", "lpdf": "https://drive.google.com/open?id=1SpX4Foeg_VkAOQIS2h3VwVS7bpNpYepY&usp=drive_fs", "led": "https://drive.google.com/open?id=1kCYsJymXGu2B66se4dTD7-CHDONRQ8ik&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 05/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA 3º PVTO", "desc": "SPDA 3º PVTO", "lpdf": "https://drive.google.com/open?id=1E_fZVkFzkUNEq3mChPH8c3ERcvvYFWD2&usp=drive_fs", "led": "https://drive.google.com/open?id=1WieHOLMMs9nEcDWKH8P85LZ0oM5-w6kw&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 06/07", "rev": "", "tipo": "EXECUTIVO", "nome": "SPDA COBERTURA", "desc": "SPDA COBERTURA", "lpdf": "https://drive.google.com/open?id=1LIMG-Y7btEyL1xd0pftVmrHriZLM6pQu&usp=drive_fs", "led": "https://drive.google.com/open?id=182SbtVQnkzjO_IYjaWsWHFtUk90a2gBH&usp=drive_fs"}, {"status": "ATUALIZADO", "disc": "SPDA", "prancha": "SPDA 07/07", "rev": "", "tipo": "EXECUTIVO", "nome": "MEMORIAL RISCOS SPDA", "desc": "MEMORIAL RISCOS SPDA", "lpdf": "https://drive.google.com/open?id=1w8fJkN7NiFWDPYWnW5zXmC29PopF-tOj&usp=drive_fs", "led": "https://drive.google.com/open?id=1jrTTCNDmEqQ9IKeTLkHaoW70wjOtL4Zq&usp=drive_fs"}, {"status": "PASSANDO POR REVISÃO", "disc": "CLIMATIZAÇÃO", "prancha": "", "rev": "", "tipo": "", "nome": "", "desc": "", "lpdf": "", "led": ""}];
 
-  const DATA = await loadSheetData();
-
-let currentUser = null;
-let isAdmin     = false;
-let allTasks    = [];
-let analyticsPeriod = 7;
-let chartDaily  = null;
-let chartDisc   = null;
+let currentUser = null, isAdmin = false, allTasks = [], analyticsDays = 7;
+let chartDaily = null, chartDisc = null;
+let curPDF = "", curNome = "", curPrancha = "", curDisc = "";
 let pdfOpenTime = null;
-let curPDF='', curNome='', curPrancha='', curDisc='';
+let zScale = 1;
+let drawMode = false, penColor = "#EF4444", penSize = 3;
+let drawing = false, lastX = 0, lastY = 0;
+let rpPenColor = "#EF4444", rpPenSize = 3;
+let rpDrawing = false, rpLastX = 0, rpLastY = 0;
+let rpBaseImg = null;
+let activeDrawerId = null;
+let dragId = null;
 
 // ── AUTH ──
-window.loginGoogle = async () => {
+ge("btn-google-login").addEventListener("click", async () => {
   try { await signInWithPopup(auth, new GoogleAuthProvider()); }
-  catch(e){ alert('Erro ao entrar: '+e.message); }
-};
-window.logout = async () => { if(confirm('Sair?')) await signOut(auth); };
+  catch(e) { alert("Erro ao entrar: " + e.message); }
+});
+ge("user-av").addEventListener("click", () => { if(confirm("Sair?")) signOut(auth); });
+ge("btn-notif-close").addEventListener("click", () => ge("notif-overlay").classList.remove("on"));
 
 onAuthStateChanged(auth, async user => {
-  if(user){
+  if(user) {
     currentUser = user;
-    $('login-screen').classList.remove('on');
-    $('user-name').textContent = user.displayName?.split(' ')[0]||'';
-    $('user-avatar').src = user.photoURL||'';
-    $('user-avatar').style.display = 'block';
-    // Check admin
-    try{
-      const snap = await getDoc(doc(db,'admins',user.email));
-      isAdmin = snap.exists();
-    }catch(e){ isAdmin=false; }
-    $('btn-analytics').style.display = isAdmin ? 'flex' : 'none';
-    await trackEvent('login',{},0);
+    ge("login-screen").classList.remove("on");
+    ge("uname").textContent = user.displayName?.split(" ")[0] || "";
+    ge("user-av").src = user.photoURL || "";
+    ge("user-av").style.display = "block";
+    try {
+      const s = await getDoc(doc(db,"admins",user.email));
+      isAdmin = s.exists();
+    } catch(e) { isAdmin = false; }
+    ge("btn-analytics").style.display = isAdmin ? "flex" : "none";
+    trackEvent("login", {}, 0);
     initApp();
-    await checkNotifications();
+    checkNotifications();
     checkSheetUpdate();
   } else {
-    currentUser=null; isAdmin=false;
-    $('login-screen').classList.add('on');
-    $('user-avatar').style.display='none';
-    $('user-name').textContent='';
-    $('btn-analytics').style.display='none';
+    currentUser = null; isAdmin = false;
+    ge("login-screen").classList.add("on");
+    ge("user-av").style.display = "none";
+    ge("btn-analytics").style.display = "none";
   }
 });
 
-// ── TRACK EVENT ──
-async function trackEvent(type, meta={}, duration=0){
-  if(!currentUser) return;
-  try{
-    await addDoc(collection(db,'events'),{
-      type, ...meta,
-      duration,
-      userEmail: currentUser.email,
-      userName:  currentUser.displayName||'',
-      userPhoto: currentUser.photoURL||'',
-      ts: serverTimestamp()
-    });
-  }catch(e){}
-}
-
-// ── SHEET UPDATE NOTIFICATION ──
-async function checkSheetUpdate(){
-  if(!currentUser)return;
-  try{
-    const res=await fetch('https://docs.google.com/spreadsheets/d/1vZCh6BtNUESBx5PgJ2RuFTsmm2duAvOPDCOIUo75QI4/gviz/tq?tqx=out:json&headers=0&sheet=LISTA%20MESTRA');
-    const text=await res.text();
-    const json=JSON.parse(text.replace(/^[^{]+/,'').replace(/[^}]+$/,''));
-    const dc=json.table.rows[2]?.c?.[9];if(!dc||!dc.v)return;
-    const dStr=String(dc.v).trim();
-    const key='zt_ls_'+btoa(currentUser.email);
-    const last=localStorage.getItem(key);
-    if(last!==dStr){
-      if(last)showSheetUpdateNotif(dStr);
-      localStorage.setItem(key,dStr);
-      const badge='<span style="background:var(--green);color:white;border-radius:20px;font-size:10px;padding:1px 6px;font-weight:500;margin-left:4px">novo</span>';
-      $('btn-lista').innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Projetos'+badge;
-      setTimeout(()=>{ $('btn-lista').innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Projetos'; },30000);
-    }
-  }catch(e){console.log('sheet check',e);}
-}
-function showSheetUpdateNotif(d){
-  const old=document.getElementById("sheet-upd-pop");
-  if(old) old.remove();
-  const p=document.createElement("div");
-  p.id="sheet-upd-pop";
-  p.style.cssText="position:fixed;top:70px;right:20px;z-index:7000;background:var(--bg2);border:1px solid var(--green);border-radius:var(--r);padding:1rem 1.25rem;max-width:300px;box-shadow:0 8px 32px rgba(0,0,0,.4)";
-  const closeBtn=document.createElement("button");
-  closeBtn.textContent="x";
-  closeBtn.setAttribute("style","background:none;border:none;color:var(--t3);cursor:pointer;font-size:18px;margin-left:auto");
-  closeBtn.onclick=function(){p.remove();};
-  const viewBtn=document.createElement("button");
-  viewBtn.textContent="Ver projetos";
-  viewBtn.setAttribute("style","margin-top:.75rem;width:100%;padding:8px;font-size:12px;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer");
-  viewBtn.onclick=function(){ showView("lista"); p.remove(); };
-  const hdr=document.createElement("div");
-  hdr.setAttribute("style","display:flex;align-items:center;gap:8px;margin-bottom:.5rem");
-  hdr.innerHTML="<span style=\"font-size:18px\">&#x1F504;</span><strong style=\"flex:1;font-size:14px\">Lista mestra atualizada!</strong>";
-  hdr.appendChild(closeBtn);
-  const msg=document.createElement("p");
-  msg.setAttribute("style","font-size:12px;color:var(--t2);line-height:1.5");
-  msg.innerHTML="Planilha atualizada em <strong style=\"color:var(--gm)\">"+ d +"</strong>.";
-  p.appendChild(hdr); p.appendChild(msg); p.appendChild(viewBtn);
-  document.body.appendChild(p);
-  setTimeout(function(){ if(p.parentNode) p.remove(); },15000);
-}
-
 // ── INIT ──
-function initApp(){
+function initApp() {
   renderTable();
-  const q = query(collection(db,'tasks'), orderBy('created','desc'));
-  onSnapshot(q, snap => {
-    allTasks = snap.docs.map(d=>({id:d.id,...d.data()}));
+  onSnapshot(query(collection(db,"tasks"), orderBy("created","desc")), snap => {
+    allTasks = snap.docs.map(d => ({id:d.id, ...d.data()}));
     updateBadge();
-    if($('view-gestor').classList.contains('on')) renderKanban();
+    if(ge("view-gestor").classList.contains("on")) renderKanban();
   });
 }
 
-// ── NOTIFICATIONS ──
-async function checkNotifications(){
+// ── SHEET UPDATE CHECK ──
+async function checkSheetUpdate() {
   if(!currentUser) return;
-  const q = query(collection(db,'tasks'),
-    where('autorEmail','==',currentUser.email),
-    where('status','==','resolvido'),
-    where('notified','==',false)
-  );
-  const snap = await getDocs(q);
-  if(snap.empty) return;
-  const items = snap.docs.map(d=>({id:d.id,...d.data()}));
-  $('notif-list').innerHTML = items.map(t=>`
-    <div class="notif-item">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem">
-        <span class="ni-prancha">${t.prancha||'—'}</span>
-        <span class="ni-badge">✓ Resolvido</span>
-      </div>
-      <div class="ni-text"><strong>${t.nome||'—'}</strong><br>${t.desc}</div>
-      ${t.resolveDesc?`<div class="ni-resolve"><strong>Como foi resolvido:</strong> ${t.resolveDesc}${t.resolveRev?' · Revisão: <strong>'+t.resolveRev+'</strong>':''}</div>`:''}
-      <div class="ni-meta">${t.created?.toDate?.()?.toLocaleString('pt-BR')||'—'}</div>
-    </div>`).join('');
-  $('notif-overlay').classList.add('on');
-  for(const item of items){
-    await updateDoc(doc(db,'tasks',item.id),{notified:true});
-  }
+  try {
+    const res = await fetch("https://docs.google.com/spreadsheets/d/1vZCh6BtNUESBx5PgJ2RuFTsmm2duAvOPDCOIUo75QI4/gviz/tq?tqx=out:json&headers=0&sheet=LISTA%20MESTRA");
+    const json = JSON.parse((await res.text()).replace(/^[^{]+/,"").replace(/[^}]+$/,""));
+    const dc = json.table.rows[2]?.c?.[9];
+    if(!dc||!dc.v) return;
+    const dStr = String(dc.v).trim();
+    const key = "zt_ls_" + btoa(currentUser.email);
+    const last = localStorage.getItem(key);
+    if(last !== dStr) {
+      if(last) showSheetPopup(dStr);
+      localStorage.setItem(key, dStr);
+      ge("btn-lista").innerHTML = ge("btn-lista").innerHTML + ' <span style="background:var(--green);color:white;border-radius:20px;font-size:10px;padding:1px 6px;font-weight:500">novo</span>';
+      setTimeout(() => { ge("btn-lista").innerHTML = ge("btn-lista").innerHTML.replace(/<span[^>]*>novo<\/span>/,""); }, 30000);
+    }
+  } catch(e) {}
+}
+
+function showSheetPopup(d) {
+  const old = ge("sheet-pop"); if(old) old.remove();
+  const p = document.createElement("div");
+  p.id = "sheet-pop";
+  p.style.cssText = "position:fixed;top:70px;right:20px;z-index:7000;background:var(--bg2);border:1px solid var(--green);border-radius:var(--r);padding:1rem 1.25rem;max-width:300px;box-shadow:0 8px 32px rgba(0,0,0,.4)";
+  const closeB = document.createElement("button");
+  closeB.textContent = "×"; closeB.style.cssText = "background:none;border:none;color:var(--t3);cursor:pointer;font-size:18px;margin-left:auto";
+  closeB.onclick = () => p.remove();
+  const hdr = document.createElement("div"); hdr.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:.5rem";
+  hdr.innerHTML = "<span style=\"font-size:18px\">🔄</span><strong style=\"flex:1;font-size:14px\">Lista mestra atualizada!</strong>";
+  hdr.appendChild(closeB);
+  const msg = document.createElement("p"); msg.style.cssText = "font-size:12px;color:var(--t2);line-height:1.5";
+  msg.innerHTML = "Atualizado em <strong style=\"color:var(--gm)\">" + d + "</strong>.";
+  const vBtn = document.createElement("button"); vBtn.textContent = "Ver projetos";
+  vBtn.style.cssText = "margin-top:.75rem;width:100%;padding:8px;font-size:12px;font-family:var(--font);border:none;border-radius:var(--rs);background:var(--green);color:white;cursor:pointer";
+  vBtn.onclick = () => { showView("lista"); p.remove(); };
+  p.appendChild(hdr); p.appendChild(msg); p.appendChild(vBtn);
+  document.body.appendChild(p);
+  setTimeout(() => { if(p.parentNode) p.remove(); }, 15000);
+}
+
+// ── NOTIFICATIONS ──
+async function checkNotifications() {
+  if(!currentUser) return;
+  try {
+    const q = query(collection(db,"tasks"), where("autorEmail","==",currentUser.email), where("status","==","resolvido"), where("notified","==",false));
+    const snap = await getDocs(q);
+    if(snap.empty) return;
+    const items = snap.docs.map(d => ({id:d.id,...d.data()}));
+    ge("notif-list").innerHTML = items.map(t => \`
+      <div class="notif-item">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem">
+          <span style="font-size:11px;color:var(--t3);font-family:var(--mono)">\${t.prancha||"—"}</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:20px;background:var(--gl);color:var(--gm)">✓ Resolvido</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:.25rem">\${t.nome||"—"}</div>
+        <div style="font-size:12px;color:var(--t2)">\${t.desc}</div>
+        \${t.resolveDesc ? \`<div style="font-size:12px;color:var(--t2);margin-top:.5rem;padding:.5rem;background:var(--bg3);border-radius:var(--rs)">✓ \${t.resolveDesc}\${t.resolveRev?" · Revisão: <strong>"+t.resolveRev+"</strong>":""}</div>\` : ""}
+      </div>\`).join("");
+    ge("notif-overlay").classList.add("on");
+    for(const item of items) await updateDoc(doc(db,"tasks",item.id), {notified:true});
+  } catch(e) {}
 }
 
 // ── VIEWS ──
-window.showView = v => {
-  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
-  $('view-'+v).classList.add('on');
-  ['lista','gestor','analytics'].forEach(n=>$('btn-'+n)?.classList.toggle('active',n===v));
-  if(v==='analytics'&&isAdmin) loadAnalytics();
-  if(v==='gestor') renderKanban();
-};
+function showView(v) {
+  document.querySelectorAll(".view").forEach(el => el.classList.remove("on"));
+  ge("view-"+v)?.classList.add("on");
+  ["lista","gestor","analytics"].forEach(n => ge("btn-"+n)?.classList.toggle("active", n===v));
+  if(v==="gestor") renderKanban();
+  if(v==="analytics" && isAdmin) loadAnalytics();
+}
+["lista","gestor","analytics"].forEach(n => {
+  const b = ge("btn-"+n); if(b) b.addEventListener("click", () => showView(n));
+});
 
-function updateBadge(){
-  const open=allTasks.filter(t=>t.status==='aberto').length;
-  $('badge-count').style.display=open>0?'inline':'none';
-  $('badge-count').textContent=open;
+function updateBadge() {
+  const n = allTasks.filter(t=>t.status==="aberto"||t.status==="solicitado").length;
+  ge("badge-n").style.display = n>0?"inline":"none";
+  ge("badge-n").textContent = n;
+}
+
+// ── ANALYTICS TRACKING ──
+async function trackEvent(type, meta, duration) {
+  if(!currentUser) return;
+  try {
+    await addDoc(collection(db,"events"), { type, ...meta, duration, userEmail:currentUser.email, userName:currentUser.displayName||"", userPhoto:currentUser.photoURL||"", ts:serverTimestamp() });
+  } catch(e) {}
 }
 
 // ── TABLE ──
-const uniq = k=>[...new Set(DATA.map(r=>r[k]).filter(Boolean))].sort();
-$('fd').innerHTML += uniq('disc').map(d=>`<option>${d}</option>`).join('');
-$('ft').innerHTML += uniq('tipo').map(t=>`<option>${t}</option>`).join('');
-$('fs').innerHTML += uniq('status').map(s=>`<option>${s}</option>`).join('');
+const uniq = k => [...new Set(DATA.map(r=>r[k]).filter(Boolean))].sort();
+ge("fd").innerHTML += uniq("disc").map(d=>`<option>${d}</option>`).join("");
+ge("ft").innerHTML += uniq("tipo").map(t=>`<option>${t}</option>`).join("");
+ge("fs").innerHTML += uniq("status").map(s=>`<option>${s}</option>`).join("");
+ge("q").addEventListener("input", renderTable);
+ge("fd").addEventListener("change", renderTable);
+ge("ft").addEventListener("change", renderTable);
+ge("fs").addEventListener("change", renderTable);
 
-function sc(s){ const l=(s||'').toUpperCase(); if(l==='ATUALIZADO')return'ba'; if(l.includes('REVIS'))return'br'; return s?'bx':''; }
+function sc(s) { const l=(s||"").toUpperCase(); if(l==="ATUALIZADO")return"ba"; if(l.includes("REVIS"))return"br"; return s?"bx":""; }
 
-window.renderTable = () => {
-  const q=($('q').value||'').toLowerCase();
-  const fd=$('fd').value, ft=$('ft').value, fs=$('fs').value;
-  const f=DATA.filter(r=>(!q||Object.values(r).join(' ').toLowerCase().includes(q))&&(!fd||r.disc===fd)&&(!ft||r.tipo===ft)&&(!fs||r.status===fs));
-  const tb=$('tb'); tb.innerHTML='';
-  $('em').style.display=f.length?'none':'block';
+function renderTable() {
+  const q=(ge("q").value||"").toLowerCase(), fd=ge("fd").value, ft=ge("ft").value, fs=ge("fs").value;
+  const f=DATA.filter(r=>(!q||Object.values(r).join(" ").toLowerCase().includes(q))&&(!fd||r.disc===fd)&&(!ft||r.tipo===ft)&&(!fs||r.status===fs));
+  const tb=ge("tb"); tb.innerHTML="";
+  ge("em").style.display=f.length?"none":"block";
   f.forEach(r=>{
-    const pu=r.lpdf.startsWith('http')?r.lpdf:'';
-    const eu=r.led.startsWith('http')?r.led:'';
-    const ne=(r.nome||r.desc||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    const pr=(r.prancha||'').replace(/'/g,"\\'");
-    const dc=(r.disc||'').replace(/'/g,"\\'");
-    const tr=document.createElement('tr');
+    const pu=r.lpdf.startsWith("http")?r.lpdf:"";
+    const eu=r.led.startsWith("http")?r.led:"";
+    const tr=document.createElement("tr");
     tr.innerHTML=`
       <td>${r.status?`<span class="b ${sc(r.status)}">${r.status}</span>`:'<span class="mt">—</span>'}</td>
       <td>${r.disc?`<span class="b bd">${r.disc}</span>`:'<span class="mt">—</span>'}</td>
@@ -868,579 +715,517 @@ window.renderTable = () => {
       <td class="dc">${r.desc&&r.desc!==r.nome?r.desc:'<span class="mt">—</span>'}</td>
       <td style="text-align:center;font-weight:500;color:var(--t2)">${r.rev||'<span class="mt">—</span>'}</td>
       <td style="white-space:nowrap">
-        ${pu?`<button class="lb" onclick="openPDF('${pu.replace(/'/g,"\\'")}','${ne}','${pr}','${dc}')">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</button>`:''}
-        ${eu?`<button class="lb ed" onclick="trackDownload('${eu.replace(/'/g,"\\'")}','${ne}');window.open('${eu.replace(/'/g,"\\'")}','_blank')">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editável</button>`:''}
-        ${!pu&&!eu?'<span class="mt" style="font-size:12px">—</span>':''}
+        ${pu?`<button class="lb" data-pdf="${pu}" data-nome="${(r.nome||r.desc||"").replace(/"/g,"&quot;")}" data-prancha="${r.prancha||""}" data-disc="${r.disc||""}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</button>`:""}
+        ${eu?`<button class="lb ed" data-dl="${eu}" data-nome="${(r.nome||r.desc||"").replace(/"/g,"&quot;")}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editável</button>`:""}
+        ${!pu&&!eu?'<span class="mt" style="font-size:12px">—</span>':""}
       </td>`;
     tb.appendChild(tr);
   });
-  $('s0').textContent=DATA.length;
-  $('s1').textContent=DATA.filter(r=>r.status==='ATUALIZADO').length;
-  $('s2').textContent=DATA.filter(r=>r.status.includes('REVIS')).length;
-  $('s3').textContent=new Set(DATA.map(r=>r.disc).filter(Boolean)).size;
-  $('s4').textContent=DATA.filter(r=>!r.lpdf.startsWith('http')).length;
-};
+  ge("s0").textContent=DATA.length;
+  ge("s1").textContent=DATA.filter(r=>r.status==="ATUALIZADO").length;
+  ge("s2").textContent=DATA.filter(r=>r.status.includes("REVIS")).length;
+  ge("s3").textContent=new Set(DATA.map(r=>r.disc).filter(Boolean)).size;
+  ge("s4").textContent=DATA.filter(r=>!r.lpdf.startsWith("http")).length;
+}
 
-window.trackDownload = (url, nome) => {
-  trackEvent('download',{nome:decodeURIComponent(nome),url},0);
-};
+// Table button delegation
+ge("tb").addEventListener("click", e => {
+  const pdfBtn = e.target.closest("[data-pdf]");
+  const dlBtn  = e.target.closest("[data-dl]");
+  if(pdfBtn) openPDF(pdfBtn.dataset.pdf, pdfBtn.dataset.nome, pdfBtn.dataset.prancha, pdfBtn.dataset.disc);
+  if(dlBtn)  { window.open(dlBtn.dataset.dl,"_blank"); trackEvent("download",{nome:dlBtn.dataset.nome,url:dlBtn.dataset.dl},0); }
+});
 
 // ── PDF MODAL ──
-let zScale=1, drawMode=false, penColor='#EF4444', penSize=3, drawing=false, lastX=0, lastY=0;
-
-function drivePreview(url){
-  if(!url) return '';
-  // Convert Drive URL to direct download link for PDF.js
+function drivePreviewUrl(url) {
   const m1=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
   const m2=url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  const id=m1?m1[1]:m2?m2[1]:'';
-  if(!id) return '';
-  // Use PDF.js CDN viewer with direct Drive download URL
-  const directUrl='https://drive.google.com/uc?export=download&id='+id;
-  return 'https://mozilla.github.io/pdf.js/web/viewer.html?file='+encodeURIComponent(directUrl);
+  const id=m1?m1[1]:m2?m2[1]:"";
+  // Use Google Docs Viewer - most compatible embed method
+  if(id) return "https://docs.google.com/viewer?embedded=true&url="+encodeURIComponent("https://drive.google.com/uc?export=download&id="+id);
+  return url;
 }
 
-window.openPDF = (url,nome,prancha,disc) => {
-  curPDF=url; curNome=decodeURIComponent(nome||''); curPrancha=prancha||''; curDisc=disc||'';
-  $('mtitle').textContent=curNome||curPrancha||'Visualizando PDF';
-  $('mlink').href=url;
-  $('pdf-frame').src=drivePreview(url)||url;
+function openPDF(url, nome, prancha, disc) {
+  curPDF=url; curNome=nome||""; curPrancha=prancha||""; curDisc=disc||"";
+  ge("mt2").textContent = curNome||curPrancha||"Visualizando PDF";
+  ge("mlink").href = url;
+  ge("pdf-iframe").src = drivePreviewUrl(url);
   setZoom(1);
-  $('ov').classList.add('open');
-  document.body.style.overflow='hidden';
-  setDrawMode(false); setReqPanel(false); clearCanvas();
+  ge("ov").classList.add("open");
+  document.body.style.overflow = "hidden";
+  setDrawMode(false);
+  setReqPanel(false);
+  clearDraw();
   pdfOpenTime = Date.now();
-  trackEvent('pdf_open',{nome:curNome,prancha:curPrancha,disc:curDisc,url},0);
-};
+  trackEvent("pdf_open",{nome:curNome,prancha:curPrancha,disc:curDisc,url},0);
+}
 
-window.closeModal = e => {
-  if(e&&e.target!==$('ov')) return;
-  if(pdfOpenTime){
+ge("btn-close-modal").addEventListener("click", closeModal);
+ge("ov").addEventListener("click", e => { if(e.target===ge("ov")) closeModal(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && ge("ov").classList.contains("open")) closeModal(); });
+
+function closeModal() {
+  if(pdfOpenTime) {
     const secs = Math.round((Date.now()-pdfOpenTime)/1000);
-    trackEvent('pdf_close',{nome:curNome,prancha:curPrancha,disc:curDisc},secs);
-    pdfOpenTime=null;
+    trackEvent("pdf_close",{nome:curNome,prancha:curPrancha,disc:curDisc},secs);
+    pdfOpenTime = null;
   }
-  $('ov').classList.remove('open');
-  $('pdf-frame').src='';
-  document.body.style.overflow='';
-  setDrawMode(false); setReqPanel(false);
-};
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('ov').classList.contains('open')) window.closeModal(); });
+  ge("ov").classList.remove("open");
+  ge("pdf-iframe").src = "";
+  document.body.style.overflow = "";
+  setDrawMode(false);
+  setReqPanel(false);
+}
 
-window.setZoom = v => { zScale=Math.min(3,Math.max(0.5,v)); $('pdf-wrap').style.transform=`scale(${zScale})`; $('zlevel').textContent=Math.round(zScale*100)+'%'; $('zslider').value=zScale; };
-window.zoom = d => window.setZoom(zScale+d);
+// ── ZOOM ──
+function setZoom(v) {
+  zScale = Math.min(8, Math.max(0.25, v));
+  ge("pdf-iframe").style.transform = `scale(${zScale})`;
+  ge("pdf-iframe").style.transformOrigin = "top center";
+  ge("zlabel").textContent = Math.round(zScale*100)+"%";
+  ge("zslider").value = zScale;
+  // Adjust scroll container height for zoomed content
+  const iframe = ge("pdf-iframe");
+  ge("pdf-scroll").style.minHeight = Math.round(680 * zScale + 32) + "px";
+}
+ge("zm--").addEventListener("click", () => setZoom(zScale-1));
+ge("zm-").addEventListener("click",  () => setZoom(zScale-0.25));
+ge("zm+").addEventListener("click",  () => setZoom(zScale+0.25));
+ge("zm++").addEventListener("click", () => setZoom(zScale+1));
+ge("zm0").addEventListener("click",  () => setZoom(1));
+ge("zslider").addEventListener("input", e => setZoom(parseFloat(e.target.value)));
 
-const dc=$('draw-canvas'), ctx=dc.getContext('2d');
-function setDrawMode(on){ drawMode=on; dc.classList.toggle('on',on); $('dtbar').classList.toggle('on',on); $('btn-draw-toggle').classList.toggle('drawing',on); $('btn-draw-toggle').innerHTML=on?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Parar':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg> Anotar'; }
-window.toggleDraw = () => setDrawMode(!drawMode);
-function getPos(e){ const rect=dc.getBoundingClientRect(); const src=e.touches?e.touches[0]:e; return[(src.clientX-rect.left)/zScale,(src.clientY-rect.top)/zScale]; }
-dc.addEventListener('mousedown',e=>{if(!drawMode)return;e.preventDefault();drawing=true;[lastX,lastY]=getPos(e)});
-dc.addEventListener('mousemove',e=>{if(!drawing||!drawMode)return;e.preventDefault();const[x,y]=getPos(e);ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(x,y);ctx.strokeStyle=penColor;ctx.lineWidth=penSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[lastX,lastY]=[x,y]});
-dc.addEventListener('mouseup',()=>drawing=false); dc.addEventListener('mouseleave',()=>drawing=false);
-dc.addEventListener('touchstart',e=>{if(!drawMode)return;e.preventDefault();drawing=true;[lastX,lastY]=getPos(e)},{passive:false});
-dc.addEventListener('touchmove',e=>{if(!drawing||!drawMode)return;e.preventDefault();const[x,y]=getPos(e);ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(x,y);ctx.strokeStyle=penColor;ctx.lineWidth=penSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[lastX,lastY]=[x,y]},{passive:false});
-dc.addEventListener('touchend',()=>drawing=false);
-window.clearCanvas = () => ctx.clearRect(0,0,dc.width,dc.height);
+// ── DRAW (rascunho) ──
+const dc = ge("draw-canvas");
+const dctx = dc.getContext("2d");
 
-window.saveDraftImage = () => {
-  // Compose: draw pdf frame area as background + annotations
-  const tmp = document.createElement('canvas');
-  tmp.width  = dc.width;
-  tmp.height = dc.height;
-  const tctx = tmp.getContext('2d');
-  // Dark background with project name
-  tctx.fillStyle = '#1E2130';
-  tctx.fillRect(0, 0, tmp.width, tmp.height);
-  // Header bar
-  tctx.fillStyle = '#1D9E75';
-  tctx.fillRect(0, 0, tmp.width, 36);
-  tctx.fillStyle = 'white';
-  tctx.font = 'bold 14px DM Sans, sans-serif';
-  tctx.textAlign = 'left';
-  tctx.fillText((curNome || curPrancha || 'Projeto').slice(0, 60), 12, 23);
-  tctx.font = '11px DM Sans, sans-serif';
-  tctx.fillStyle = 'rgba(255,255,255,0.7)';
-  tctx.textAlign = 'right';
-  tctx.fillText(new Date().toLocaleString('pt-BR'), tmp.width - 12, 23);
-  // Draw annotations on top
-  tctx.drawImage(dc, 0, 36);
-  const a = document.createElement('a');
-  a.download = 'rascunho_' + (curPrancha || 'projeto').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,30) + '.png';
-  a.href = tmp.toDataURL('image/png');
-  a.click();
-};
-
-window.shareDraftWhatsapp = async () => {
-  const tmp = document.createElement('canvas');
-  tmp.width  = dc.width;
-  tmp.height = dc.height + 36;
-  const tctx = tmp.getContext('2d');
-  tctx.fillStyle = '#1E2130';
-  tctx.fillRect(0, 0, tmp.width, tmp.height);
-  tctx.fillStyle = '#1D9E75';
-  tctx.fillRect(0, 0, tmp.width, 36);
-  tctx.fillStyle = 'white';
-  tctx.font = 'bold 14px DM Sans, sans-serif';
-  tctx.textAlign = 'left';
-  tctx.fillText((curNome || curPrancha || 'Projeto').slice(0, 60), 12, 23);
-  tctx.font = '11px DM Sans, sans-serif';
-  tctx.fillStyle = 'rgba(255,255,255,0.7)';
-  tctx.textAlign = 'right';
-  tctx.fillText(new Date().toLocaleString('pt-BR'), tmp.width - 12, 23);
-  tctx.drawImage(dc, 0, 36);
-
-  if(navigator.share){
-    tmp.toBlob(async blob => {
-      const file = new File([blob], 'rascunho.png', {type:'image/png'});
-      try{
-        if(navigator.canShare && navigator.canShare({files:[file]})){
-          await navigator.share({
-            files: [file],
-            title: 'Rascunho - ' + (curNome || curPrancha || 'Projeto'),
-            text:  curNome || curPrancha || ''
-          });
-          return;
-        }
-      }catch(e){}
-      window.saveDraftImage();
-      alert('Imagem salva! Envie pelo WhatsApp.');
-    }, 'image/png');
+function setDrawMode(on) {
+  drawMode = on;
+  ge("dtbar").classList.toggle("on", on);
+  ge("btn-draw").classList.toggle("act", on);
+  ge("btn-draw").innerHTML = on
+    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Parar'
+    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg> Anotar';
+  if(on) {
+    // Position canvas over iframe
+    const iframe = ge("pdf-iframe");
+    const rect = iframe.getBoundingClientRect();
+    const scroll = ge("pdf-scroll");
+    const srect = scroll.getBoundingClientRect();
+    dc.style.display = "block";
+    dc.style.position = "absolute";
+    dc.style.left = (rect.left - srect.left + scroll.scrollLeft) + "px";
+    dc.style.top  = (rect.top  - srect.top  + scroll.scrollTop)  + "px";
+    dc.style.width  = rect.width  + "px";
+    dc.style.height = rect.height + "px";
+    dc.style.zIndex = "10";
+    dc.width  = iframe.offsetWidth;
+    dc.height = iframe.offsetHeight;
+    const pdfSide = ge("pdf-scroll").parentElement;
+    pdfSide.style.position = "relative";
+    pdfSide.appendChild(dc);
   } else {
-    window.saveDraftImage();
-    setTimeout(() => {
-      alert('Imagem salva! Abra o WhatsApp e envie o arquivo baixado.');
-      window.open('https://web.whatsapp.com', '_blank');
-    }, 600);
-  }
-};
-window.setPenColor = el=>{ penColor=el.dataset.color; document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('sel')); el.classList.add('sel'); };
-window.setPenSize  = el=>{ penSize=parseInt(el.dataset.size); document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); };
-function hasDrawing(){ const d=ctx.getImageData(0,0,dc.width,dc.height).data; for(let i=3;i<d.length;i+=4){if(d[i]>0)return true;} return false; }
-function getSnapshot(){ const t=document.createElement('canvas');t.width=dc.width;t.height=dc.height;const c=t.getContext('2d');c.fillStyle='#1E2130';c.fillRect(0,0,t.width,t.height);c.drawImage(dc,0,0);return t.toDataURL('image/png'); }
-
-function setReqPanel(on){
-  const panel=$('req-panel');
-  if(!panel) return;
-  panel.classList.toggle('on',on);
-  if(on){
-    const cw=$('rp-canvas-wrap'), aw=$('rp-annotate-wrap'), sn=$('rp-snap');
-    if(cw) cw.style.display='none';
-    if(aw) aw.style.display='block';
-    if(sn) sn.style.display='none';
-    rpHasAnnotation=false;
-    setTimeout(initRpCanvas, 50);
+    dc.style.display = "none";
   }
 }
-window.toggleRequest = () => setReqPanel(!$('req-panel').classList.contains('on'));
 
-// ── SCREEN CAPTURE + ANNOTATION IN REQUEST PANEL ──
-let rpPenColor='#EF4444',rpPenSize=3,rpDrawing=false,rpLastX=0,rpLastY=0,rpHasAnnotation=false,rpBaseImage=null;
+ge("btn-draw").addEventListener("click", () => setDrawMode(!drawMode));
 
-window.captureAndAnnotate=async()=>{
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getDisplayMedia){alert('Use Chrome ou Edge para capturar a tela.');return;}
-  const btn=$('btn-capture-snap');
-  btn.textContent='Aguardando...';btn.disabled=true;
-  try{
-    const stream=await navigator.mediaDevices.getDisplayMedia({video:{cursor:'never'},audio:false});
-    const video=document.createElement('video');video.srcObject=stream;await video.play();
-    await new Promise(r=>setTimeout(r,300));
-    const W=video.videoWidth||1280,H=video.videoHeight||720;
-    const frame=$('pdf-frame'),rect=frame.getBoundingClientRect();
-    const sx=W/window.innerWidth,sy=H/window.innerHeight;
-    const cx=Math.round(rect.left*sx),cy=Math.round(rect.top*sy),cw=Math.round(rect.width*sx),ch=Math.round(rect.height*sy);
-    const c=$('rp-canvas');c.width=cw>0?cw:W;c.height=ch>0?ch:H;
-    const ctx=c.getContext('2d');
-    if(cw>0&&ch>0)ctx.drawImage(video,cx,cy,cw,ch,0,0,cw,ch);
-    else ctx.drawImage(video,0,0,W,H,0,0,c.width,c.height);
-    rpBaseImage=new Image();rpBaseImage.src=c.toDataURL('image/png');
+function drawPos(e, canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return [src.clientX - rect.left, src.clientY - rect.top];
+}
+dc.addEventListener("mousedown",  e => { e.preventDefault(); drawing=true; [lastX,lastY]=drawPos(e,dc); });
+dc.addEventListener("mousemove",  e => { if(!drawing)return; e.preventDefault(); const[x,y]=drawPos(e,dc); dctx.beginPath();dctx.moveTo(lastX,lastY);dctx.lineTo(x,y);dctx.strokeStyle=penColor;dctx.lineWidth=penSize;dctx.lineCap="round";dctx.lineJoin="round";dctx.stroke();[lastX,lastY]=[x,y]; });
+dc.addEventListener("mouseup",    () => drawing=false);
+dc.addEventListener("mouseleave", () => drawing=false);
+dc.addEventListener("touchstart", e => { e.preventDefault(); drawing=true; [lastX,lastY]=drawPos(e,dc); }, {passive:false});
+dc.addEventListener("touchmove",  e => { if(!drawing)return; e.preventDefault(); const[x,y]=drawPos(e,dc); dctx.beginPath();dctx.moveTo(lastX,lastY);dctx.lineTo(x,y);dctx.strokeStyle=penColor;dctx.lineWidth=penSize;dctx.lineCap="round";dctx.lineJoin="round";dctx.stroke();[lastX,lastY]=[x,y]; }, {passive:false});
+dc.addEventListener("touchend",   () => drawing=false);
+
+function clearDraw() { dctx.clearRect(0,0,dc.width,dc.height); }
+ge("btn-clear-draw").addEventListener("click", clearDraw);
+
+// Pen color/size for draw
+document.querySelectorAll(".dtbar .cdot").forEach(el => {
+  el.addEventListener("click", () => {
+    penColor = el.dataset.c;
+    document.querySelectorAll(".dtbar .cdot").forEach(d=>d.classList.remove("sel"));
+    el.classList.add("sel");
+  });
+});
+document.querySelectorAll(".dtbar .szbtn").forEach(el => {
+  el.addEventListener("click", () => {
+    penSize = parseInt(el.dataset.s);
+    document.querySelectorAll(".dtbar .szbtn").forEach(b=>b.classList.remove("sel"));
+    el.classList.add("sel");
+  });
+});
+
+// Save/share draft
+function makeDraftCanvas() {
+  const tmp = document.createElement("canvas");
+  tmp.width = dc.width; tmp.height = dc.height + 36;
+  const ctx = tmp.getContext("2d");
+  ctx.fillStyle = "#1E2130"; ctx.fillRect(0,0,tmp.width,tmp.height);
+  ctx.fillStyle = "#1D9E75"; ctx.fillRect(0,0,tmp.width,36);
+  ctx.fillStyle = "white"; ctx.font = "bold 13px sans-serif"; ctx.textAlign = "left";
+  ctx.fillText((curNome||curPrancha||"Projeto").slice(0,60), 10, 23);
+  ctx.font = "11px sans-serif"; ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.textAlign = "right";
+  ctx.fillText(new Date().toLocaleString("pt-BR"), tmp.width-10, 23);
+  ctx.drawImage(dc, 0, 36);
+  return tmp;
+}
+ge("btn-save-draft").addEventListener("click", () => {
+  const c = makeDraftCanvas(); const a = document.createElement("a");
+  a.download = "rascunho_"+(curPrancha||"projeto").replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,30)+".jpg";
+  a.href = c.toDataURL("image/jpeg", 0.92); a.click();
+});
+ge("btn-share-draft").addEventListener("click", () => {
+  const c = makeDraftCanvas();
+  c.toBlob(async blob => {
+    const file = new File([blob],"rascunho.jpg",{type:"image/jpeg"});
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})) {
+      try { await navigator.share({files:[file],title:"Rascunho - "+(curNome||curPrancha||"")}); return; } catch(e){}
+    }
+    // fallback: download + whatsapp web
+    ge("btn-save-draft").click();
+    setTimeout(() => { alert("Imagem salva! Abra o WhatsApp e envie o arquivo."); window.open("https://web.whatsapp.com","_blank"); }, 600);
+  }, "image/jpeg", 0.92);
+});
+
+// ── REQUEST PANEL ──
+function setReqPanel(on) {
+  ge("req-panel").classList.toggle("on", on);
+  ge("btn-rev").classList.toggle("rev", !on);
+  if(!on) {
+    ge("rp-canvas-wrap").style.display = "none";
+    rpBaseImg = null;
+  }
+}
+ge("btn-rev").addEventListener("click", () => setReqPanel(!ge("req-panel").classList.contains("on")));
+ge("btn-cancel-req").addEventListener("click", () => setReqPanel(false));
+
+// Capture screen for annotation in request panel
+const rpc = ge("rp-canvas");
+const rpctx = rpc.getContext("2d");
+
+ge("btn-capture").addEventListener("click", async () => {
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+    alert("Use Chrome ou Edge para capturar a tela."); return;
+  }
+  const btn = ge("btn-capture");
+  btn.textContent = "Aguardando permissão..."; btn.disabled = true;
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({video:{cursor:"never"},audio:false});
+    const video = document.createElement("video");
+    video.srcObject = stream; await video.play();
+    await new Promise(r => setTimeout(r,300));
+    const W=video.videoWidth||1280, H=video.videoHeight||720;
+    const iframe=ge("pdf-iframe"), rect=iframe.getBoundingClientRect();
+    const sx=W/window.innerWidth, sy=H/window.innerHeight;
+    const cx=Math.round(rect.left*sx), cy=Math.round(rect.top*sy);
+    const cw=Math.round(rect.width*sx), ch=Math.round(rect.height*sy);
+    rpc.width  = cw>10?cw:W;
+    rpc.height = ch>10?ch:H;
+    if(cw>10&&ch>10) rpctx.drawImage(video,cx,cy,cw,ch,0,0,cw,ch);
+    else rpctx.drawImage(video,0,0,W,H,0,0,rpc.width,rpc.height);
+    rpBaseImg = new Image(); rpBaseImg.src = rpc.toDataURL("image/jpeg",0.92);
     stream.getTracks().forEach(t=>t.stop());
-    $('rp-canvas-wrap').style.display='block';$('rp-annotate-wrap').style.display='none';
-  }catch(e){if(e.name!=='NotAllowedError')alert('Erro: '+e.message);}
-  finally{btn.textContent='Capturar tela e anotar';btn.disabled=false;}
-};
+    ge("rp-canvas-wrap").style.display = "block";
+  } catch(e) { if(e.name!=="NotAllowedError") alert("Erro: "+e.message); }
+  finally { btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Capturar tela e anotar'; btn.disabled=false; }
+});
 
-window.recaptureSnap=()=>{$('rp-canvas-wrap').style.display='none';$('rp-annotate-wrap').style.display='block';rpHasAnnotation=false;};
+ge("btn-recapture").addEventListener("click", () => { ge("rp-canvas-wrap").style.display="none"; rpBaseImg=null; });
+ge("btn-clear-rp").addEventListener("click", () => {
+  rpctx.clearRect(0,0,rpc.width,rpc.height);
+  if(rpBaseImg) rpctx.drawImage(rpBaseImg,0,0,rpc.width,rpc.height);
+});
 
-window.saveRpImage=()=>{
-  const c=$('rp-canvas');if(!c)return;
-  const a=document.createElement('a');
-  a.download='apontamento_'+(curPrancha||'projeto').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,30)+'.png';
-  a.href=c.toDataURL('image/png');a.click();
-};
-
-window.shareRpWhatsapp=async()=>{
-  const c=$('rp-canvas');if(!c)return;
-  if(navigator.share){
-    c.toBlob(async blob=>{
-      const file=new File([blob],'apontamento.png',{type:'image/png'});
-      try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Apontamento - '+(curNome||curPrancha||'')});return;}}catch(e){}
-      window.saveRpImage();alert('Imagem salva! Envie pelo WhatsApp.');
-    },'image/png');
-  }else{window.saveRpImage();setTimeout(()=>{alert('Imagem salva! Abra o WhatsApp e envie o arquivo.');window.open('https://web.whatsapp.com','_blank');},600);}
-};
-
-window.setRpColor=el=>{rpPenColor=el.dataset.color;document.querySelectorAll('#rp-canvas-wrap .color-dot').forEach(d=>d.classList.remove('sel'));el.classList.add('sel');};
-window.setRpSize=el=>{rpPenSize=parseInt(el.dataset.size);document.querySelectorAll('#rp-canvas-wrap .sz-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');};
-window.clearRpCanvas=()=>{const c=$('rp-canvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(rpBaseImage)ctx.drawImage(rpBaseImage,0,0,c.width,c.height);rpHasAnnotation=false;};
-
-function getRpPos(e){const c=$('rp-canvas'),r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*c.width/r.width,(s.clientY-r.top)*c.height/r.height];}
-function initRpCanvas(){
-  const rpCanvas=$('rp-canvas');
-  if(!rpCanvas) return;
-  rpCanvas.addEventListener('mousedown',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)});
-  rpCanvas.addEventListener('mousemove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;});
-  rpCanvas.addEventListener('mouseup',()=>rpDrawing=false);
-  rpCanvas.addEventListener('mouseleave',()=>rpDrawing=false);
-  rpCanvas.addEventListener('touchstart',e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=getRpPos(e)},{passive:false});
-  rpCanvas.addEventListener('touchmove',e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=getRpPos(e),ctx=rpCanvas.getContext('2d');ctx.beginPath();ctx.moveTo(rpLastX,rpLastY);ctx.lineTo(x,y);ctx.strokeStyle=rpPenColor;ctx.lineWidth=rpPenSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();[rpLastX,rpLastY]=[x,y];rpHasAnnotation=true;},{passive:false});
-  rpCanvas.addEventListener('touchend',()=>rpDrawing=false);
+// rp canvas draw
+function rpPos(e) {
+  const rect=rpc.getBoundingClientRect(), src=e.touches?e.touches[0]:e;
+  return [(src.clientX-rect.left)*rpc.width/rect.width, (src.clientY-rect.top)*rpc.height/rect.height];
 }
-function getRpSnapshot(){const c=$('rp-canvas');return c?c.toDataURL('image/png'):null;}
+rpc.addEventListener("mousedown",  e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=rpPos(e)});
+rpc.addEventListener("mousemove",  e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=rpPos(e);rpctx.beginPath();rpctx.moveTo(rpLastX,rpLastY);rpctx.lineTo(x,y);rpctx.strokeStyle=rpPenColor;rpctx.lineWidth=rpPenSize;rpctx.lineCap="round";rpctx.lineJoin="round";rpctx.stroke();[rpLastX,rpLastY]=[x,y];});
+rpc.addEventListener("mouseup",    ()=>rpDrawing=false);
+rpc.addEventListener("mouseleave", ()=>rpDrawing=false);
+rpc.addEventListener("touchstart", e=>{e.preventDefault();rpDrawing=true;[rpLastX,rpLastY]=rpPos(e);},{passive:false});
+rpc.addEventListener("touchmove",  e=>{if(!rpDrawing)return;e.preventDefault();const[x,y]=rpPos(e);rpctx.beginPath();rpctx.moveTo(rpLastX,rpLastY);rpctx.lineTo(x,y);rpctx.strokeStyle=rpPenColor;rpctx.lineWidth=rpPenSize;rpctx.lineCap="round";rpctx.lineJoin="round";rpctx.stroke();[rpLastX,rpLastY]=[x,y];},{passive:false});
+rpc.addEventListener("touchend",   ()=>rpDrawing=false);
 
-window.submitRequest = async () => {
-  if(!currentUser){alert('Faça login primeiro.');return;}
-  const desc=$('rp-desc').value.trim();
-  if(!desc){alert('Descreva o problema.');return;}
-  const btn=$('btn-submit-req'); btn.disabled=true; btn.textContent='Enviando...';
-  try{
-    await addDoc(collection(db,'tasks'),{
-      prancha:curPrancha, nome:curNome, pdfUrl:curPDF,
-      autorNome:currentUser.displayName||'Anônimo', autorEmail:currentUser.email, autorFoto:currentUser.photoURL||'',
-      prio:$('rp-prio').value, desc, snap: ($('rp-canvas-wrap').style.display!=='none')?getRpSnapshot():(hasDrawing()?getSnapshot():null),
-      status:'aberto', notified:false, resolveDesc:'', resolveRev:'', created:serverTimestamp()
+// rp pen color/size
+document.querySelectorAll("#rp-canvas-wrap .cdot").forEach(el => {
+  el.addEventListener("click", () => {
+    rpPenColor=el.dataset.c;
+    document.querySelectorAll("#rp-canvas-wrap .cdot").forEach(d=>d.classList.remove("sel"));
+    el.classList.add("sel");
+  });
+});
+document.querySelectorAll("#rp-canvas-wrap .szbtn").forEach(el => {
+  el.addEventListener("click", () => {
+    rpPenSize=parseInt(el.dataset.s);
+    document.querySelectorAll("#rp-canvas-wrap .szbtn").forEach(b=>b.classList.remove("sel"));
+    el.classList.add("sel");
+  });
+});
+
+// Send request
+ge("btn-send-req").addEventListener("click", async () => {
+  if(!currentUser) { alert("Faça login primeiro."); return; }
+  const desc = ge("rp-desc").value.trim();
+  if(!desc) { alert("Descreva o problema."); return; }
+  const btn = ge("btn-send-req"); btn.disabled=true; btn.textContent="Enviando...";
+  const snapData = ge("rp-canvas-wrap").style.display!=="none" ? rpc.toDataURL("image/jpeg",0.85) : null;
+  try {
+    await addDoc(collection(db,"tasks"), {
+      prancha: curPrancha, nome: curNome, pdfUrl: curPDF,
+      autorNome: currentUser.displayName||"Anônimo",
+      autorEmail: currentUser.email,
+      autorFoto: currentUser.photoURL||"",
+      prio: ge("rp-prio").value,
+      desc, snap: snapData,
+      status: "aberto", kanbanCol: "solicitado",
+      notified: false, resolveDesc: "", resolveRev: "",
+      created: serverTimestamp()
     });
-    $('rp-desc').value=''; $('rp-prio').value='normal';
-    setReqPanel(false); clearCanvas(); setDrawMode(false);
-    btn.textContent='✓ Enviado!';
-    setTimeout(()=>{btn.textContent='Enviar pedido de revisão';btn.disabled=false;},2000);
-  }catch(e){alert('Erro: '+e.message);btn.disabled=false;btn.textContent='Enviar pedido de revisão';}
-};
+    ge("rp-desc").value=""; ge("rp-prio").value="normal";
+    ge("rp-canvas-wrap").style.display="none"; rpBaseImg=null;
+    setReqPanel(false); clearDraw(); setDrawMode(false);
+    btn.textContent="✓ Enviado!";
+    setTimeout(()=>{ btn.textContent="Enviar pedido de revisão"; btn.disabled=false; },2000);
+  } catch(e) {
+    alert("Erro ao enviar: " + e.message + (e.code==="permission-denied"?"
+
+Verifique as regras do Firestore.":""));
+    btn.disabled=false; btn.textContent="Enviar pedido de revisão";
+  }
+});
 
 // ── KANBAN ──
-const COLS = ['solicitado','andamento-interno','andamento-externo','concluido'];
-let draggingId = null;
-let activeDrawerId = null;
-
-// Map old status to kanban col for backwards compat
-function statusToCol(s){
-  if(!s||s==='aberto'||s==='solicitado') return 'solicitado';
-  if(s==='andamento-interno') return 'andamento-interno';
-  if(s==='andamento-externo') return 'andamento-externo';
-  if(s==='resolvido'||s==='concluido') return 'concluido';
-  return 'solicitado';
+const COLS = ["solicitado","andamento-interno","andamento-externo","concluido"];
+function colIdx(c) { return COLS.indexOf(c); }
+function statusToCol(s) {
+  if(!s||s==="aberto"||s==="solicitado") return "solicitado";
+  if(COLS.includes(s)) return s;
+  if(s==="resolvido") return "concluido";
+  return "solicitado";
+}
+function prioHtml(p) {
+  return p==="urgente"?'<span class="kcard-prio kp-u">🔴 Urgente</span>':p==="baixa"?'<span class="kcard-prio kp-b">⬇ Baixa</span>':'<span class="kcard-prio kp-n">● Normal</span>';
 }
 
-function prioClass(p){ return p==='urgente'?'kp-urg':p==='baixa'?'kp-baixa':'kp-norm'; }
-function prioLabel(p){ return p==='urgente'?'🔴 Urgente':p==='baixa'?'⬇ Baixa':'● Normal'; }
+ge("gf-prio").addEventListener("change", renderKanban);
 
-window.renderKanban = () => {
-  const gfp = $('gf-prio').value;
+function renderKanban() {
+  const pf = ge("gf-prio").value;
   let tasks = [...allTasks];
-  if(gfp) tasks = tasks.filter(t=>t.prio===gfp);
-
-  // Group by col
-  const groups = {};
-  COLS.forEach(c=>groups[c]=[]);
-  tasks.forEach(t=>{ const c=statusToCol(t.kanbanCol||t.status); groups[c]=(groups[c]||[]); groups[c].push(t); });
-
+  if(pf) tasks = tasks.filter(t=>t.prio===pf);
+  const groups = {}; COLS.forEach(c=>groups[c]=[]);
+  tasks.forEach(t=>{ const c=statusToCol(t.kanbanCol||t.status); if(!groups[c])groups[c]=[]; groups[c].push(t); });
   COLS.forEach((col,i)=>{
-    const body = $('cb-'+col);
+    const body = ge("kb-"+col);
     const items = groups[col]||[];
-    $('cnt-'+i).textContent = items.length;
-    if(!items.length){ body.innerHTML='<div class="col-empty">Nenhuma revisão</div>'; return; }
+    ge("kc"+i).textContent = items.length;
+    if(!items.length) { body.innerHTML='<div class="kcol-empty">Nenhuma revisão</div>'; return; }
     body.innerHTML = items.map(t=>`
-      <div class="kcard ${t.snap?'has-snap':''}" id="kc-${t.id}"
-        draggable="true"
-        ondragstart="onDragStart(event,'${t.id}')"
-        ondragend="onDragEnd(event)"
-        onclick="openDrawer('${t.id}')">
+      <div class="kcard" id="kc-${t.id}" draggable="true" data-id="${t.id}">
         <div class="kcard-top">
-          <span class="kcard-prancha">${t.prancha||'—'}</span>
-          <span class="kcard-prio ${prioClass(t.prio)}">${prioLabel(t.prio)}</span>
+          <span class="kcard-prancha">${t.prancha||"—"}</span>
+          ${prioHtml(t.prio)}
         </div>
-        ${t.snap?`<img class="kcard-snap" src="${t.snap}" alt="" onclick="event.stopPropagation();document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').classList.add('open')">`:''}
-        <div class="kcard-nome">${t.nome||'—'}</div>
-        <div class="kcard-desc">${t.desc||''}</div>
+        ${t.snap?`<img class="kcard-snap" src="${t.snap}" alt="" data-snap="${t.snap}">`:""}
+        <div class="kcard-nome">${t.nome||"—"}</div>
+        <div class="kcard-desc">${t.desc||""}</div>
         <div class="kcard-foot">
           <div class="kcard-autor">
-            ${t.autorFoto?`<img class="kcard-avatar" src="${t.autorFoto}" onerror="this.style.display='none'">`:''}
-            <span>${t.autorNome||'—'}</span>
+            ${t.autorFoto?`<img class="kcard-av" src="${t.autorFoto}" onerror="this.style.display='none'">`:""}
+            ${t.autorNome||"—"}
           </div>
-          <span class="kcard-date">${t.created?.toDate?.()?.toLocaleDateString('pt-BR')||''}</span>
+          <span class="kcard-date">${t.created?.toDate?.()?.toLocaleDateString("pt-BR")||""}</span>
         </div>
-        ${col==='concluido'&&t.resolveDesc?`<div style="margin-top:.5rem;padding:.5rem .6rem;background:var(--bg3);border-radius:4px;font-size:11px;color:var(--t2);border:1px solid var(--brd)">✓ ${t.resolveDesc}${t.resolveRev?' · <strong style=color:var(--gm)>'+t.resolveRev+'</strong>':''}</div>`:''}
-      </div>`).join('');
+        ${col==="concluido"&&t.resolveDesc?`<div style="margin-top:.5rem;padding:.4rem .6rem;background:var(--bg3);border-radius:4px;font-size:11px;color:var(--t2);border:1px solid var(--brd)">✓ ${t.resolveDesc}${t.resolveRev?" · <strong style=color:var(--gm)>"+t.resolveRev+"</strong>":""}</div>`:""}
+      </div>`).join("");
   });
-};
-
-// ── DRAG & DROP (desktop) ──
-window.onDragStart = (e,id) => { draggingId=id; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; };
-window.onDragEnd   = e => { e.currentTarget.classList.remove('dragging'); draggingId=null; };
-window.onDragOver  = e => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); };
-window.onDragLeave = e => e.currentTarget.classList.remove('drag-over');
-window.onDrop = async (e,colOverride) => {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  const col = colOverride || e.currentTarget.dataset.col;
-  const id  = draggingId;
-  if(!id||!col) return;
-  const newStatus = col==='concluido'?'resolvido':col;
-  try{
-    await updateDoc(doc(db,'tasks',id),{
-      kanbanCol: col,
-      status: newStatus,
-      ...(col==='concluido'?{notified:false}:{})
+  // Drag events
+  document.querySelectorAll(".kcard").forEach(card=>{
+    card.addEventListener("dragstart", e=>{dragId=card.dataset.id;card.classList.add("dragging");e.dataTransfer.effectAllowed="move";});
+    card.addEventListener("dragend",   e=>{card.classList.remove("dragging");dragId=null;});
+    card.addEventListener("click", e=>{ if(!e.target.closest("[data-snap]")) openDrawer(card.dataset.id); });
+  });
+  document.querySelectorAll("[data-snap]").forEach(img=>{
+    img.addEventListener("click", e=>{ e.stopPropagation(); ge("lb-img").src=img.dataset.snap; ge("lightbox").classList.add("open"); });
+  });
+  document.querySelectorAll(".kcol-body").forEach(col=>{
+    col.addEventListener("dragover",  e=>{e.preventDefault();col.classList.add("drag-over");});
+    col.addEventListener("dragleave", e=>col.classList.remove("drag-over"));
+    col.addEventListener("drop",      async e=>{
+      e.preventDefault(); col.classList.remove("drag-over");
+      if(!dragId) return;
+      const newCol = col.dataset.col;
+      const newStatus = newCol==="concluido"?"resolvido":"aberto";
+      try { await updateDoc(doc(db,"tasks",dragId),{kanbanCol:newCol,status:newStatus,...(newCol==="concluido"?{notified:false}:{})}); }
+      catch(err){console.error(err);}
     });
-  }catch(err){console.error(err);}
-};
+  });
+}
 
-// ── TOUCH DRAG (mobile) ──
-let touchTask=null, touchClone=null, touchCol=null;
-document.addEventListener('touchstart', e=>{
-  const card = e.target.closest('.kcard');
-  if(!card) return;
-  touchTask = card.id.replace('kc-','');
-  const rect = card.getBoundingClientRect();
-  touchClone = card.cloneNode(true);
-  touchClone.style.cssText=`position:fixed;top:${rect.top}px;left:${rect.left}px;width:${rect.width}px;opacity:.8;z-index:9999;pointer-events:none;transform:scale(1.02);transition:none`;
-  document.body.appendChild(touchClone);
-  card.style.opacity='.3';
+// Touch drag for mobile
+let touchId=null,touchClone=null,touchCol=null;
+document.addEventListener("touchstart",e=>{
+  const card=e.target.closest(".kcard"); if(!card) return;
+  touchId=card.dataset.id;
+  const r=card.getBoundingClientRect();
+  touchClone=card.cloneNode(true);
+  touchClone.style.cssText=`position:fixed;top:${r.top}px;left:${r.left}px;width:${r.width}px;opacity:.8;z-index:9999;pointer-events:none`;
+  document.body.appendChild(touchClone); card.style.opacity=".3";
 },{passive:true});
-
-document.addEventListener('touchmove', e=>{
+document.addEventListener("touchmove",e=>{
   if(!touchClone) return;
   const t=e.touches[0];
-  touchClone.style.top=(t.clientY-40)+'px';
-  touchClone.style.left=(t.clientX-130)+'px';
-  // Find col under finger
-  document.querySelectorAll('.col-body').forEach(cb=>{
-    const r=cb.getBoundingClientRect();
+  touchClone.style.top=(t.clientY-40)+"px"; touchClone.style.left=(t.clientX-130)+"px";
+  document.querySelectorAll(".kcol-body").forEach(b=>{
+    const r=b.getBoundingClientRect();
     const over=t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom;
-    cb.classList.toggle('drag-over',over);
-    if(over) touchCol=cb.dataset.col;
+    b.classList.toggle("drag-over",over); if(over) touchCol=b.dataset.col;
   });
 },{passive:true});
-
-document.addEventListener('touchend', async e=>{
+document.addEventListener("touchend",async e=>{
   if(!touchClone) return;
   document.body.removeChild(touchClone); touchClone=null;
-  document.querySelectorAll('.col-body').forEach(cb=>cb.classList.remove('drag-over'));
-  const card=document.getElementById('kc-'+touchTask);
-  if(card) card.style.opacity='';
-  if(touchTask&&touchCol){
-    draggingId=touchTask;
-    await window.onDrop(e,touchCol);
+  document.querySelectorAll(".kcol-body").forEach(b=>b.classList.remove("drag-over"));
+  const card=document.getElementById("kc-"+touchId); if(card) card.style.opacity="";
+  if(touchId&&touchCol){
+    const newStatus=touchCol==="concluido"?"resolvido":"aberto";
+    try { await updateDoc(doc(db,"tasks",touchId),{kanbanCol:touchCol,status:newStatus,...(touchCol==="concluido"?{notified:false}:{})}); }catch(e){}
   }
-  touchTask=null; touchCol=null;
+  touchId=null; touchCol=null;
 },{passive:true});
 
 // ── DRAWER ──
-window.openDrawer = id => {
-  const t = allTasks.find(t=>t.id===id);
-  if(!t) return;
+function openDrawer(id) {
+  const t = allTasks.find(t=>t.id===id); if(!t) return;
   activeDrawerId = id;
-  $('drawer-title').textContent = t.nome||t.prancha||'Revisão';
-  $('dr-nome').textContent    = t.nome||'—';
-  $('dr-prancha').textContent = t.prancha||'';
-  $('dr-autor').textContent   = `${t.autorNome||'—'} · ${t.created?.toDate?.()?.toLocaleString('pt-BR')||'—'}`;
-  $('dr-desc').textContent    = t.desc||'—';
-  if(t.snap){ $('dr-snap').src=t.snap; $('dr-snap-wrap').style.display='block'; }
-  else { $('dr-snap-wrap').style.display='none'; }
-  $('dr-col').value   = statusToCol(t.kanbanCol||t.status);
-  $('dr-prio').value  = t.prio||'normal';
-  $('dr-resolve').value = t.resolveDesc||'';
-  $('dr-rev').value     = t.resolveRev||'';
-  $('drawer-overlay').classList.add('on');
-  $('drawer').classList.add('on');
-  document.body.style.overflow='hidden';
-};
+  ge("drw-title").textContent = t.nome||t.prancha||"Revisão";
+  ge("drw-nome").textContent  = t.nome||"—";
+  ge("drw-prancha").textContent = t.prancha||"";
+  ge("drw-autor").textContent = (t.autorNome||"—")+" · "+(t.created?.toDate?.()?.toLocaleString("pt-BR")||"—");
+  ge("drw-desc").textContent  = t.desc||"—";
+  if(t.snap){ ge("drw-snap").src=t.snap; ge("drw-snap-wrap").style.display="block"; }
+  else ge("drw-snap-wrap").style.display="none";
+  ge("drw-col").value   = statusToCol(t.kanbanCol||t.status);
+  ge("drw-prio").value  = t.prio||"normal";
+  ge("drw-resolve").value = t.resolveDesc||"";
+  ge("drw-rev").value   = t.resolveRev||"";
+  ge("drw-ov").classList.add("on"); ge("drw").classList.add("on");
+  document.body.style.overflow="hidden";
+}
+function closeDrawer() {
+  ge("drw-ov").classList.remove("on"); ge("drw").classList.remove("on");
+  document.body.style.overflow=""; activeDrawerId=null;
+}
+ge("drw-close").addEventListener("click", closeDrawer);
+ge("drw-ov").addEventListener("click", closeDrawer);
+ge("drw-snap").addEventListener("click", () => { ge("lb-img").src=ge("drw-snap").src; ge("lightbox").classList.add("open"); });
 
-window.closeDrawer = () => {
-  $('drawer-overlay').classList.remove('on');
-  $('drawer').classList.remove('on');
-  document.body.style.overflow='';
-  activeDrawerId=null;
-};
-
-window.updateCardCol = async () => {
+ge("btn-save-drw").addEventListener("click", async () => {
   if(!activeDrawerId) return;
-  const col = $('dr-col').value;
-  const newStatus = col==='concluido'?'resolvido':col;
-  try{ await updateDoc(doc(db,'tasks',activeDrawerId),{kanbanCol:col,status:newStatus,...(col==='concluido'?{notified:false}:{})}); }
-  catch(e){console.error(e);}
-};
-
-window.updateCardPrio = async () => {
-  if(!activeDrawerId) return;
-  try{ await updateDoc(doc(db,'tasks',activeDrawerId),{prio:$('dr-prio').value}); }
-  catch(e){console.error(e);}
-};
-
-window.saveDrawer = async () => {
-  if(!activeDrawerId) return;
-  const col = $('dr-col').value;
-  const newStatus = col==='concluido'?'resolvido':col;
-  try{
-    await updateDoc(doc(db,'tasks',activeDrawerId),{
-      kanbanCol:    col,
-      status:       newStatus,
-      prio:         $('dr-prio').value,
-      resolveDesc:  $('dr-resolve').value.trim(),
-      resolveRev:   $('dr-rev').value.trim(),
-      ...(col==='concluido'?{notified:false,resolvedAt:serverTimestamp()}:{})
+  const col = ge("drw-col").value;
+  const newStatus = col==="concluido"?"resolvido":"aberto";
+  try {
+    await updateDoc(doc(db,"tasks",activeDrawerId),{
+      kanbanCol:col, status:newStatus, prio:ge("drw-prio").value,
+      resolveDesc:ge("drw-resolve").value.trim(), resolveRev:ge("drw-rev").value.trim(),
+      ...(col==="concluido"?{notified:false,resolvedAt:serverTimestamp()}:{})
     });
     closeDrawer();
-  }catch(e){alert('Erro ao salvar: '+e.message);}
-};
+  } catch(e){ alert("Erro: "+e.message); }
+});
+ge("btn-del-drw").addEventListener("click", async () => {
+  if(!activeDrawerId||!confirm("Remover este pedido?")) return;
+  try { await deleteDoc(doc(db,"tasks",activeDrawerId)); closeDrawer(); }
+  catch(e){ alert("Erro: "+e.message); }
+});
 
-window.deleteDrawerTask = async () => {
-  if(!activeDrawerId||!confirm('Remover este pedido permanentemente?')) return;
-  try{ await deleteDoc(doc(db,'tasks',activeDrawerId)); closeDrawer(); }
-  catch(e){alert('Erro: '+e.message);}
-};
-
-window.deleteTask = window.deleteDrawerTask;
+// Lightbox
+ge("lightbox").addEventListener("click", () => ge("lightbox").classList.remove("open"));
 
 // ── ANALYTICS ──
-window.setPeriod = btn => {
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-  analyticsPeriod = parseInt(btn.dataset.days);
-  loadAnalytics();
-};
+document.querySelectorAll(".period-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".period-btn").forEach(b=>b.classList.remove("sel"));
+    btn.classList.add("sel");
+    analyticsDays = parseInt(btn.dataset.days);
+    loadAnalytics();
+  });
+});
+ge("btn-reload-analytics").addEventListener("click", loadAnalytics);
 
-window.loadAnalytics = async () => {
+async function loadAnalytics() {
   if(!isAdmin) return;
-  const tbl = id => { const el=$('tbl-'+id); if(el) el.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:1rem">Carregando...</td></tr>'; };
-  ['top-proj','top-rev','downloads','users'].forEach(tbl);
-
-  // Date filter
-  let since = null;
-  if(analyticsPeriod>0){
-    since = new Date(); since.setDate(since.getDate()-analyticsPeriod);
-  }
-
-  // Fetch events
   let evSnap;
-  try{
-    const q = since
-      ? query(collection(db,'events'), where('ts','>=',Timestamp.fromDate(since)), orderBy('ts','desc'))
-      : query(collection(db,'events'), orderBy('ts','desc'));
-    evSnap = await getDocs(q);
-  }catch(e){ console.error(e); return; }
+  try {
+    const q2 = analyticsDays>0
+      ? query(collection(db,"events"), where("ts",">=",Timestamp.fromDate(new Date(Date.now()-analyticsDays*86400000))), orderBy("ts","desc"))
+      : query(collection(db,"events"), orderBy("ts","desc"));
+    evSnap = await getDocs(q2);
+  } catch(e){ console.error(e); return; }
+  const events  = evSnap.docs.map(d=>({id:d.id,...d.data()}));
+  const opens   = events.filter(e=>e.type==="pdf_open");
+  const closes  = events.filter(e=>e.type==="pdf_close");
+  const dls     = events.filter(e=>e.type==="download");
+  const since   = analyticsDays>0?new Date(Date.now()-analyticsDays*86400000):null;
+  const filtTasks = since ? allTasks.filter(t=>{ const d=t.created?.toDate?.(); return d&&d>=since; }) : allTasks;
+  const avgSec  = closes.length ? Math.round(closes.reduce((a,e)=>a+(e.duration||0),0)/closes.length) : 0;
 
-  const events = evSnap.docs.map(d=>({id:d.id,...d.data()}));
-  const opens  = events.filter(e=>e.type==='pdf_open');
-  const closes = events.filter(e=>e.type==='pdf_close');
-  const dls    = events.filter(e=>e.type==='download');
-  const logins = events.filter(e=>e.type==='login');
+  ge("kpi-ac").textContent = opens.length;
+  ge("kpi-dl").textContent = dls.length;
+  ge("kpi-rv").textContent = filtTasks.length;
+  ge("kpi-tm").textContent = avgSec>=60?Math.round(avgSec/60)+"min":avgSec+"s";
+  ge("kpi-us").textContent = new Set([...opens,...dls].map(e=>e.userEmail)).size;
 
-  // KPIs
-  $('kpi-acessos').textContent   = opens.length;
-  $('kpi-downloads').textContent = dls.length;
-  $('kpi-revisoes').textContent  = since
-    ? allTasks.filter(t=>{ const d=t.created?.toDate?.(); return d&&d>=since; }).length
-    : allTasks.length;
-  const avgSec = closes.length ? Math.round(closes.reduce((a,e)=>a+(e.duration||0),0)/closes.length) : 0;
-  $('kpi-tempo').textContent = avgSec>=60 ? Math.round(avgSec/60)+'min' : avgSec+'s';
-  $('kpi-usuarios').textContent  = new Set([...opens,...logins].map(e=>e.userEmail)).size;
-
-  // Chart: acessos por dia
-  const dayMap = {};
-  opens.forEach(e=>{
-    const d = e.ts?.toDate?.()?.toLocaleDateString('pt-BR')||'';
-    dayMap[d]=(dayMap[d]||0)+1;
-  });
-  const dayLabels = Object.keys(dayMap).slice(-14);
-  const dayVals   = dayLabels.map(d=>dayMap[d]);
+  // Charts
+  const dayMap={};
+  opens.forEach(e=>{ const d=e.ts?.toDate?.()?.toLocaleDateString("pt-BR")||""; dayMap[d]=(dayMap[d]||0)+1; });
+  const dayL=Object.keys(dayMap).slice(-14), dayV=dayL.map(d=>dayMap[d]);
   if(chartDaily) chartDaily.destroy();
-  chartDaily = new Chart($('chart-daily'),{
-    type:'bar',
-    data:{ labels:dayLabels, datasets:[{label:'Acessos',data:dayVals,backgroundColor:'rgba(29,158,117,0.6)',borderColor:'#1D9E75',borderWidth:1,borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#555970',font:{size:11}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#555970',font:{size:11}},grid:{color:'rgba(255,255,255,0.04)'}}}}
-  });
-
-  // Chart: por disciplina
-  const discMap = {};
-  opens.forEach(e=>{ const d=e.disc||'Outros'; discMap[d]=(discMap[d]||0)+1; });
-  const discLabels = Object.keys(discMap).sort((a,b)=>discMap[b]-discMap[a]).slice(0,8);
-  const discVals   = discLabels.map(d=>discMap[d]);
-  const colors=['#1D9E75','#378ADD','#9F97EE','#EF9F27','#E24B4A','#5DCAA5','#F97316','#FACC15'];
+  chartDaily=new Chart(ge("chart-daily"),{type:"bar",data:{labels:dayL,datasets:[{label:"Acessos",data:dayV,backgroundColor:"rgba(29,158,117,.6)",borderColor:"#1D9E75",borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#555970",font:{size:11}},grid:{color:"rgba(255,255,255,.04)"}},y:{ticks:{color:"#555970",font:{size:11}},grid:{color:"rgba(255,255,255,.04)"}}}}});
+  const discMap={};
+  opens.forEach(e=>{ const d=e.disc||"Outros"; discMap[d]=(discMap[d]||0)+1; });
+  const discL=Object.keys(discMap).sort((a,b)=>discMap[b]-discMap[a]).slice(0,8),discV=discL.map(d=>discMap[d]);
   if(chartDisc) chartDisc.destroy();
-  chartDisc = new Chart($('chart-disc'),{
-    type:'doughnut',
-    data:{labels:discLabels,datasets:[{data:discVals,backgroundColor:colors,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8B8FA8',font:{size:11},boxWidth:12}}}}
-  });
+  chartDisc=new Chart(ge("chart-disc"),{type:"doughnut",data:{labels:discL,datasets:[{data:discV,backgroundColor:["#1D9E75","#378ADD","#9F97EE","#EF9F27","#E24B4A","#5DCAA5","#F97316","#FACC15"],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{color:"#8B8FA8",font:{size:11},boxWidth:12}}}}});
 
-  // Top projetos acessados
-  const projMap = {};
-  opens.forEach(e=>{ const k=e.nome||e.prancha||'—'; projMap[k]={count:(projMap[k]?.count||0)+1,nome:k}; });
-  closes.forEach(e=>{ const k=e.nome||e.prancha||'—'; if(projMap[k]) projMap[k].totalSec=(projMap[k].totalSec||0)+(e.duration||0); });
-  const topProj = Object.values(projMap).sort((a,b)=>b.count-a.count).slice(0,10);
-  const maxP = topProj[0]?.count||1;
-  $('tbl-top-proj').innerHTML = topProj.length ? topProj.map((p,i)=>`
-    <tr><td><span class="rank-num ${i<3?'top':''}">${i+1}</span></td>
-    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.nome}">${p.nome}
-      <div class="bar-mini" style="width:${Math.round((p.count/maxP)*100)}%"></div></td>
-    <td><strong>${p.count}</strong></td>
-    <td>${p.totalSec?Math.round(p.totalSec/p.count/60)+'min':'—'}</td></tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:1rem">Nenhum dado ainda.</td></tr>';
+  // Tables
+  const projMap={};
+  opens.forEach(e=>{ const k=e.nome||e.prancha||"—"; projMap[k]={count:(projMap[k]?.count||0)+1,totalSec:(projMap[k]?.totalSec||0)}; });
+  closes.forEach(e=>{ const k=e.nome||e.prancha||"—"; if(projMap[k]) projMap[k].totalSec+=(e.duration||0); });
+  const topP=Object.entries(projMap).sort((a,b)=>b[1].count-a[1].count).slice(0,10);
+  ge("tbl-top-proj").innerHTML=topP.length?topP.map(([n,v],i)=>`<tr><td><span class="rk ${i<3?"top":""}">${i+1}</span></td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${n}">${n}</td><td><strong>${v.count}</strong></td><td>${v.totalSec?Math.round(v.totalSec/v.count/60)+"min":"—"}</td></tr>`).join(""):"<tr><td colspan='4' style='text-align:center;color:var(--t3);padding:1rem'>Nenhum dado.</td></tr>";
 
-  // Top revisões
-  const revMap = {};
-  allTasks.forEach(t=>{
-    if(since&&t.created?.toDate?.()&&t.created.toDate()<since) return;
-    const k=t.nome||t.prancha||'—';
-    revMap[k]={count:(revMap[k]?.count||0)+1,nome:k,open:(revMap[k]?.open||0)+(t.status==='aberto'?1:0)};
-  });
-  const topRev = Object.values(revMap).sort((a,b)=>b.count-a.count).slice(0,10);
-  $('tbl-top-rev').innerHTML = topRev.length ? topRev.map((r,i)=>`
-    <tr><td><span class="rank-num ${i<3?'top':''}">${i+1}</span></td>
-    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.nome}</td>
-    <td><strong>${r.count}</strong></td>
-    <td>${r.open>0?`<span class="tc-status tc-open">${r.open} aberto${r.open>1?'s':''}</span>`:'<span class="tc-status tc-done2">Resolvidas</span>'}</td></tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:1rem">Nenhuma revisão ainda.</td></tr>';
+  const revMap={};
+  filtTasks.forEach(t=>{ const k=t.nome||t.prancha||"—"; revMap[k]={count:(revMap[k]?.count||0)+1,open:(revMap[k]?.open||0)+(t.status==="aberto"||t.status==="solicitado"?1:0)}; });
+  const topR=Object.entries(revMap).sort((a,b)=>b[1].count-a[1].count).slice(0,10);
+  ge("tbl-top-rev").innerHTML=topR.length?topR.map(([n,v],i)=>`<tr><td><span class="rk ${i<3?"top":""}">${i+1}</span></td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</td><td><strong>${v.count}</strong></td><td>${v.open>0?`<span style="font-size:10px;padding:2px 6px;border-radius:20px;background:var(--ambl);color:var(--amber)">${v.open} aberto${v.open>1?"s":""}</span>`:'<span style="font-size:10px;padding:2px 6px;border-radius:20px;background:var(--gl);color:var(--gm)">Resolvidas</span>'}</td></tr>`).join(""):"<tr><td colspan='4' style='text-align:center;color:var(--t3);padding:1rem'>Nenhuma revisão.</td></tr>";
 
-  // Downloads
-  const dlMap = {};
-  dls.forEach(e=>{ const k=e.nome||'—'; dlMap[k]=(dlMap[k]||0)+1; });
-  const topDl = Object.entries(dlMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  $('tbl-downloads').innerHTML = topDl.length ? topDl.map(([nome,cnt],i)=>`
-    <tr><td><span class="rank-num ${i<3?'top':''}">${i+1}</span></td>
-    <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nome}</td>
-    <td><strong>${cnt}</strong></td></tr>`).join('')
-    : '<tr><td colspan="3" style="text-align:center;color:var(--t3);padding:1rem">Nenhum download ainda.</td></tr>';
+  const dlMap={};
+  dls.forEach(e=>{ const k=e.nome||"—"; dlMap[k]=(dlMap[k]||0)+1; });
+  const topD=Object.entries(dlMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  ge("tbl-dl").innerHTML=topD.length?topD.map(([n,v],i)=>`<tr><td><span class="rk ${i<3?"top":""}">${i+1}</span></td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</td><td><strong>${v}</strong></td></tr>`).join(""):"<tr><td colspan='3' style='text-align:center;color:var(--t3);padding:1rem'>Nenhum download.</td></tr>";
 
-  // Usuários
-  const userMap = {};
-  events.forEach(e=>{
-    if(!e.userEmail) return;
-    if(!userMap[e.userEmail]) userMap[e.userEmail]={email:e.userEmail,name:e.userName||e.userEmail,photo:e.userPhoto||'',opens:0,totalSec:0};
-    if(e.type==='pdf_open')  userMap[e.userEmail].opens++;
-    if(e.type==='pdf_close') userMap[e.userEmail].totalSec+=(e.duration||0);
-  });
-  // Add revision count
-  allTasks.forEach(t=>{
-    if(since&&t.created?.toDate?.()&&t.created.toDate()<since) return;
-    if(userMap[t.autorEmail]) userMap[t.autorEmail].revs=(userMap[t.autorEmail].revs||0)+1;
-  });
-  const topUsers = Object.values(userMap).sort((a,b)=>b.opens-a.opens);
-  $('tbl-users').innerHTML = topUsers.length ? topUsers.map(u=>`
-    <tr>
-      <td><img class="u-avatar" src="${u.photo||''}" onerror="this.style.display='none'">${u.name}<br><span style="font-size:10px;color:var(--t3)">${u.email}</span></td>
-      <td><strong>${u.opens}</strong></td>
-      <td>${u.totalSec?Math.round(u.totalSec/60)+'min':'—'}</td>
-      <td>${u.revs||0}</td>
-    </tr>`).join('')
-    : '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:1rem">Nenhum acesso registrado.</td></tr>';
-};
+  const userMap={};
+  events.forEach(e=>{ if(!e.userEmail)return; if(!userMap[e.userEmail]) userMap[e.userEmail]={name:e.userName||e.userEmail,photo:e.userPhoto||"",opens:0,totalSec:0,revs:0}; if(e.type==="pdf_open") userMap[e.userEmail].opens++; if(e.type==="pdf_close") userMap[e.userEmail].totalSec+=(e.duration||0); });
+  filtTasks.forEach(t=>{ if(userMap[t.autorEmail]) userMap[t.autorEmail].revs++; });
+  const topU=Object.values(userMap).sort((a,b)=>b.opens-a.opens);
+  ge("tbl-users").innerHTML=topU.length?topU.map(u=>`<tr><td><img class="u-av" src="${u.photo||""}" onerror="this.style.display='none'">${u.name}</td><td><strong>${u.opens}</strong></td><td>${u.totalSec?Math.round(u.totalSec/60)+"min":"—"}</td><td>${u.revs||0}</td></tr>`).join(""):"<tr><td colspan='4' style='text-align:center;color:var(--t3);padding:1rem'>Nenhum acesso.</td></tr>";
+}
 
-// stubs for backwards compat
-window.openResolveForm = window.openResolveForm || function(id){ window.openDrawer(id); };
-window.confirmResolve  = window.confirmResolve  || function(id){ window.saveDrawer(); };
 </script>
 </body>
 </html>
